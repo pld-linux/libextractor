@@ -142,6 +142,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libextractor_elf.so
 %attr(755,root,root) %{_libdir}/libextractor_filename.so
 %attr(755,root,root) %{_libdir}/libextractor_gif.so
+# missing -avoid-version in this dir
+%attr(755,root,root) %{_libdir}/libextractor_hash_md5.so*
+%attr(755,root,root) %{_libdir}/libextractor_hash_sha1.so*
 %attr(755,root,root) %{_libdir}/libextractor_html.so
 %attr(755,root,root) %{_libdir}/libextractor_jpeg.so
 %attr(755,root,root) %{_libdir}/libextractor_lower.so
@@ -150,6 +153,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libextractor_mpeg.so
 %attr(755,root,root) %{_libdir}/libextractor_ogg.so
 %attr(755,root,root) %{_libdir}/libextractor_ole2.so
+%attr(755,root,root) %{_libdir}/libextractor_oo.so
 %attr(755,root,root) %{_libdir}/libextractor_pdf.so
 %attr(755,root,root) %{_libdir}/libextractor_png.so
 %attr(755,root,root) %{_libdir}/libextractor_ps.so
@@ -165,6 +169,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libextractor_elf.la
 %{_libdir}/libextractor_filename.la
 %{_libdir}/libextractor_gif.la
+%{_libdir}/libextractor_hash_md5.la
+%{_libdir}/libextractor_hash_sha1.la
 %{_libdir}/libextractor_html.la
 %{_libdir}/libextractor_jpeg.la
 %{_libdir}/libextractor_lower.la
@@ -173,6 +179,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libextractor_mpeg.la
 %{_libdir}/libextractor_ogg.la
 %{_libdir}/libextractor_ole2.la
+%{_libdir}/libextractor_oo.la
 %{_libdir}/libextractor_pdf.la
 %{_libdir}/libextractor_png.la
 %{_libdir}/libextractor_ps.la
