@@ -1,16 +1,17 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.3.3
-Release:	2
+Version:	0.3.4
+Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~500kB smaller than .tar.bz2
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	0e70401b3a1574bf16caf17a4af78398
+# Source0-md5:	49de0466f5d25d6cbe8f76502c50ee87
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
+BuildRequires:	gettext-devel >= 0.14
 BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
@@ -103,8 +104,7 @@ Statyczna wersja bibliotek libextractor.
 %setup -q
 
 %build
-# gettext is not used yet
-#%%{__gettextize}
+%{__gettextize}
 %{__libtoolize} --ltdl
 %{__aclocal}
 %{__autoconf}
@@ -123,13 +123,15 @@ rm -rf $RPM_BUILD_ROOT
 # useless
 rm -f $RPM_BUILD_ROOT%{_libdir}/libextractor_[!u]*.a
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/extract
