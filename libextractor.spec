@@ -1,13 +1,13 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.3.7
+Version:	0.3.10
 Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~500kB smaller than .tar.bz2
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	911cedbcbecf4ec27f3a943172cd472b
+# Source0-md5:	a5bd92ed939aa1b85f027bc36a156f77
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -122,7 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 # useless
-rm -f $RPM_BUILD_ROOT%{_libdir}/libextractor_[!u]*.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/libextractor_*.a
 
 %find_lang %{name}
 
@@ -138,69 +138,81 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/extract
 %attr(755,root,root) %{_libdir}/libextractor.so.*.*.*
 # plugins are lt_dlopened without extension, so *.la are needed
-%attr(755,root,root) %{_libdir}/libextractor_asf.so
-%attr(755,root,root) %{_libdir}/libextractor_elf.so
-%attr(755,root,root) %{_libdir}/libextractor_filename.so
-%attr(755,root,root) %{_libdir}/libextractor_gif.so
-# missing -avoid-version in this dir
-%attr(755,root,root) %{_libdir}/libextractor_hash_md5.so*
-%attr(755,root,root) %{_libdir}/libextractor_hash_sha1.so*
-%attr(755,root,root) %{_libdir}/libextractor_hash_rmd160.so*
-%attr(755,root,root) %{_libdir}/libextractor_html.so
-%attr(755,root,root) %{_libdir}/libextractor_id3v2.so
-%attr(755,root,root) %{_libdir}/libextractor_jpeg.so
-%attr(755,root,root) %{_libdir}/libextractor_lower.so
-%attr(755,root,root) %{_libdir}/libextractor_mime.so
-%attr(755,root,root) %{_libdir}/libextractor_mp3.so
-%attr(755,root,root) %{_libdir}/libextractor_mpeg.so
-%attr(755,root,root) %{_libdir}/libextractor_ogg.so
-%attr(755,root,root) %{_libdir}/libextractor_ole2.so
-%attr(755,root,root) %{_libdir}/libextractor_oo.so
-%attr(755,root,root) %{_libdir}/libextractor_pdf.so
-%attr(755,root,root) %{_libdir}/libextractor_png.so
-%attr(755,root,root) %{_libdir}/libextractor_ps.so
-%attr(755,root,root) %{_libdir}/libextractor_qt.so
-%attr(755,root,root) %{_libdir}/libextractor_real.so
-%attr(755,root,root) %{_libdir}/libextractor_riff.so
-%attr(755,root,root) %{_libdir}/libextractor_rpm.so
-%attr(755,root,root) %{_libdir}/libextractor_split.so
-%attr(755,root,root) %{_libdir}/libextractor_tiff.so
-%attr(755,root,root) %{_libdir}/libextractor_wav.so
-%attr(755,root,root) %{_libdir}/libextractor_zip.so
-%{_libdir}/libextractor_asf.la
-%{_libdir}/libextractor_elf.la
-%{_libdir}/libextractor_filename.la
-%{_libdir}/libextractor_gif.la
-%{_libdir}/libextractor_hash_md5.la
-%{_libdir}/libextractor_hash_sha1.la
-%{_libdir}/libextractor_hash_rmd160.la
-%{_libdir}/libextractor_html.la
-%{_libdir}/libextractor_id3v2.la
-%{_libdir}/libextractor_jpeg.la
-%{_libdir}/libextractor_lower.la
-%{_libdir}/libextractor_mime.la
-%{_libdir}/libextractor_mp3.la
-%{_libdir}/libextractor_mpeg.la
-%{_libdir}/libextractor_ogg.la
-%{_libdir}/libextractor_ole2.la
-%{_libdir}/libextractor_oo.la
-%{_libdir}/libextractor_pdf.la
-%{_libdir}/libextractor_png.la
-%{_libdir}/libextractor_ps.la
-%{_libdir}/libextractor_qt.la
-%{_libdir}/libextractor_real.la
-%{_libdir}/libextractor_riff.la
-%{_libdir}/libextractor_rpm.la
-%{_libdir}/libextractor_split.la
-%{_libdir}/libextractor_tiff.la
-%{_libdir}/libextractor_wav.la
-%{_libdir}/libextractor_zip.la
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_asf.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_deb.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_dvi.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_elf.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_filename.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_gif.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_hash_md5.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_hash_rmd160.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_hash_sha1.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_html.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v2.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v23.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v24.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_jpeg.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_lower.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_man.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_mime.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_mp3.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_mpeg.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_ogg.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_ole2.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_oo.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_pdf.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_png.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_ps.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_qt.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_real.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_riff.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_rpm.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_split.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_tar.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_tiff.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_wav.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_zip.so
+%{_libdir}/%{name}/libextractor_asf.la
+%{_libdir}/%{name}/libextractor_deb.la
+%{_libdir}/%{name}/libextractor_dvi.la
+%{_libdir}/%{name}/libextractor_elf.la
+%{_libdir}/%{name}/libextractor_filename.la
+%{_libdir}/%{name}/libextractor_gif.la
+%{_libdir}/%{name}/libextractor_hash_md5.la
+%{_libdir}/%{name}/libextractor_hash_rmd160.la
+%{_libdir}/%{name}/libextractor_hash_sha1.la
+%{_libdir}/%{name}/libextractor_html.la
+%{_libdir}/%{name}/libextractor_id3v2.la
+%{_libdir}/%{name}/libextractor_id3v23.la
+%{_libdir}/%{name}/libextractor_id3v24.la
+%{_libdir}/%{name}/libextractor_jpeg.la
+%{_libdir}/%{name}/libextractor_lower.la
+%{_libdir}/%{name}/libextractor_man.la
+%{_libdir}/%{name}/libextractor_mime.la
+%{_libdir}/%{name}/libextractor_mp3.la
+%{_libdir}/%{name}/libextractor_mpeg.la
+%{_libdir}/%{name}/libextractor_ogg.la
+%{_libdir}/%{name}/libextractor_ole2.la
+%{_libdir}/%{name}/libextractor_oo.la
+%{_libdir}/%{name}/libextractor_pdf.la
+%{_libdir}/%{name}/libextractor_png.la
+%{_libdir}/%{name}/libextractor_ps.la
+%{_libdir}/%{name}/libextractor_qt.la
+%{_libdir}/%{name}/libextractor_real.la
+%{_libdir}/%{name}/libextractor_riff.la
+%{_libdir}/%{name}/libextractor_rpm.la
+%{_libdir}/%{name}/libextractor_split.la
+%{_libdir}/%{name}/libextractor_tar.la
+%{_libdir}/%{name}/libextractor_tiff.la
+%{_libdir}/%{name}/libextractor_wav.la
+%{_libdir}/%{name}/libextractor_zip.la
 %{_mandir}/man1/*
 
 %files printable
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libextractor_printable_*.so
-%{_libdir}/libextractor_printable_*.la
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_printable_*.so
+%{_libdir}/%{name}/libextractor_printable_*.la
 
 %files devel
 %defattr(644,root,root,755)
