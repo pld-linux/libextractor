@@ -10,6 +10,7 @@ Source0:	http://www.ovmj.org/%{name}/download/%{name}-%{version}.tar.bz2
 URL:		http://www.ovmj.org/%{name}/
 Requires:	libvorbis
 Requires:	libogg
+Requires:	libltdl
 BuildRequires:	libvorbis-devel
 BuildRequires:	libogg-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -106,7 +107,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/extract
-%attr(755,root,root) %{_libdir}/libextractor*.so*
+%attr(755,root,root) %{_libdir}/*.so*
 %doc %{_mandir}/man1/*
 
 %files devel
