@@ -1,17 +1,18 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.3.4
+Version:	0.3.5
 Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~500kB smaller than .tar.bz2
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	49de0466f5d25d6cbe8f76502c50ee87
+# Source0-md5:	d46b44d22226d3e45a235bb6c5cd5130
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
 BuildRequires:	gettext-devel >= 0.14
+BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
@@ -148,6 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libextractor_mp3.so
 %attr(755,root,root) %{_libdir}/libextractor_mpeg.so
 %attr(755,root,root) %{_libdir}/libextractor_ogg.so
+%attr(755,root,root) %{_libdir}/libextractor_ole2.so
 %attr(755,root,root) %{_libdir}/libextractor_pdf.so
 %attr(755,root,root) %{_libdir}/libextractor_png.so
 %attr(755,root,root) %{_libdir}/libextractor_ps.so
@@ -170,6 +172,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libextractor_mp3.la
 %{_libdir}/libextractor_mpeg.la
 %{_libdir}/libextractor_ogg.la
+%{_libdir}/libextractor_ole2.la
 %{_libdir}/libextractor_pdf.la
 %{_libdir}/libextractor_png.la
 %{_libdir}/libextractor_ps.la
