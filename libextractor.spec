@@ -1,13 +1,13 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.3.2
+Version:	0.3.3
 Release:	1
 License:	GPL
 Group:		Libraries
-# strange, .tar.gz is ~400kB smaller than .tar.bz2
+# strange, .tar.gz is ~500kB smaller than .tar.bz2
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	16701405da5e11f624978b5bf3dbc014
+# Source0-md5:	0e70401b3a1574bf16caf17a4af78398
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
@@ -144,6 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libextractor_rpm.so
 %attr(755,root,root) %{_libdir}/libextractor_split.so
 %attr(755,root,root) %{_libdir}/libextractor_tiff.so
+%attr(755,root,root) %{_libdir}/libextractor_wav.so
 %attr(755,root,root) %{_libdir}/libextractor_zip.so
 %{_libdir}/libextractor_asf.la
 %{_libdir}/libextractor_elf.la
@@ -165,6 +166,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libextractor_rpm.la
 %{_libdir}/libextractor_split.la
 %{_libdir}/libextractor_tiff.la
+%{_libdir}/libextractor_wav.la
 %{_libdir}/libextractor_zip.la
 %{_mandir}/man1/*
 
