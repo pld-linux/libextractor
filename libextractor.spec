@@ -1,12 +1,12 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.2.4
+Version:	0.2.6
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://www.ovmj.org/%{name}/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	9d059e4b02cac89661816f19458d0bf5
+# Source0-md5:	3db4ffe524dade88f4bcc877cb67db91
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	aspell-devel
 BuildRequires:	libltdl-devel
