@@ -1,5 +1,6 @@
 #
-%bcond_without	static		# build with shared glib
+# Conditional build:
+%bcond_with	static		# build with static glib
 #
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
@@ -12,6 +13,7 @@ Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
 # Source0-md5:	d99e1b13a017d39700e376a0edbf7ba2
 URL:		http://gnunet.org/libextractor/
+BuildRequires:	ImageMagick-devel >= 1:6.0.0
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
 BuildRequires:	gettext-devel >= 0.14
@@ -181,6 +183,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_rpm.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_split.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tar.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnail.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tiff.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_translit.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_wav.so
@@ -216,6 +219,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_rpm.la
 %{_libdir}/%{name}/libextractor_split.la
 %{_libdir}/%{name}/libextractor_tar.la
+%{_libdir}/%{name}/libextractor_thumbnail.la
 %{_libdir}/%{name}/libextractor_tiff.la
 %{_libdir}/%{name}/libextractor_translit.la
 %{_libdir}/%{name}/libextractor_wav.la
