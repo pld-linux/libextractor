@@ -54,7 +54,7 @@ typów MIME w sposób podobny do dobrze znanego narzêdzia "file".
 Ka¿da informacja pobrana z pliku nale¿y do jednej z oko³o 40
 kategorii (np. tytu³, autor, opis, typ MIME).
 
-Ta paczka zawiera te¿ narzedzie "extract", które pozwala skorzystaæ z
+Ta paczka zawiera te¿ narzêdzie "extract", które pozwala skorzystaæ z
 us³ug libextractor bezpo¶rednio z linii poleceñ. "extract" mo¿e byæ
 u¿ywane w podobny sposób, co "file". "file" zna wiêcej typów danych,
 "extract" natomiast dostarcza bardziej precyzyjnych i szczegó³owych
