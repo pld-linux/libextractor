@@ -4,14 +4,14 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.4.0
+Version:	0.4.2
 Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~500kB smaller than .tar.bz2
-Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	609f74c08fbc1f454ca2387d7fea1168
-URL:		http://www.ovmj.org/libextractor/
+Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
+# Source0-md5:	d99e1b13a017d39700e376a0edbf7ba2
+URL:		http://gnunet.org/libextractor/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
 BuildRequires:	gettext-devel >= 0.14
@@ -182,6 +182,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_split.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tar.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tiff.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_translit.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_wav.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_zip.so
 %{_libdir}/%{name}/libextractor_asf.la
@@ -216,6 +217,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_split.la
 %{_libdir}/%{name}/libextractor_tar.la
 %{_libdir}/%{name}/libextractor_tiff.la
+%{_libdir}/%{name}/libextractor_translit.la
 %{_libdir}/%{name}/libextractor_wav.la
 %{_libdir}/%{name}/libextractor_zip.la
 %{_mandir}/man1/*
