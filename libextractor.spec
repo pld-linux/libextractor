@@ -125,6 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libextractor.so.*.*.*
 # plugins are lt_dlopened without extension, so *.la are needed
 %attr(755,root,root) %{_libdir}/libextractor_asf.so
+%attr(755,root,root) %{_libdir}/libextractor_elf.so
 %attr(755,root,root) %{_libdir}/libextractor_filename.so
 %attr(755,root,root) %{_libdir}/libextractor_gif.so
 %attr(755,root,root) %{_libdir}/libextractor_html.so
@@ -145,6 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libextractor_tiff.so
 %attr(755,root,root) %{_libdir}/libextractor_zip.so
 %{_libdir}/libextractor_asf.la
+%{_libdir}/libextractor_elf.la
 %{_libdir}/libextractor_filename.la
 %{_libdir}/libextractor_gif.la
 %{_libdir}/libextractor_html.la
