@@ -2,17 +2,17 @@ Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji meta-danych
 Name:		libextractor
 Version:	0.2.4
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://www.ovmj.org/%{name}/download/%{name}-%{version}.tar.bz2
 # Source0-md5:	9d059e4b02cac89661816f19458d0bf5
-URL:		http://www.ovmj.org/%{name}/
-Requires:	libvorbis
-Requires:	libogg
-Requires:	libltdl
+URL:		http://www.ovmj.org/libextractor/
+BuildRequires:	aspell-devel
+BuildRequires:	libltdl-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	libogg-devel
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -21,7 +21,7 @@ libextractor uses a plugin-mechanism that makes it easy to add support
 for more file formats, allowing anybody to add new extractors quickly.
 
 libextractor currently features meta-data extractors for HTML, JPEG,
-OGG, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real audio and video,
+OGG, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real Audio and Video,
 PostScript and PDF documents. It also detects many more MIME-types in
 a fashion similar to the well-known "file" tool.
 
@@ -44,14 +44,14 @@ wsparcie dla nowych formatów plików.
 
 libextractor obecnie pozwala na pozyskanie meta-danych z plików w
 formatach HTML, JPEG, OGG, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real
-audio i video, PostScript oraz PDF. Ponadto rozpoznaje du¿o wiêcej
-typów MIME, podobnie jak dobrze znane narzêdzie "file".
+Audio i Video, PostScript oraz PDF. Ponadto rozpoznaje du¿o wiêcej
+typów MIME w sposób podobny do dobrze znanego narzêdzia "file".
 
-Ka¿da informacja pobrana z pliku nale¿y do jednej z ponad 400
+Ka¿da informacja pobrana z pliku nale¿y do jednej z oko³o 40
 kategorii (np. tytu³, autor, opis, typ MIME).
 
 Ta paczka zawiera te¿ narzedzie "extract", które pozwala skorzystaæ z
-us³ug libextractor bezpo¶rednio z linii komend. "extract" mo¿e byæ
+us³ug libextractor bezpo¶rednio z linii poleceñ. "extract" mo¿e byæ
 u¿ywane w podobny sposób, co "file". "file" zna wiêcej typów danych,
 "extract" natomiast dostarcza bardziej precyzyjnych i szczegó³owych
 informacji na temat obs³ugiwanych formatów (HTML, JPEG, OGG, MP3, PNG,
@@ -93,29 +93,36 @@ Statyczna wersja bibliotek libextractor.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
+
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+
+# useless
+rm -f $RPM_BUILD_ROOT%{_libdir}/libextractor_*.a
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post 
-/sbin/ldconfig
-
-%postun 
-/sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
+%doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/extract
-%attr(755,root,root) %{_libdir}/*.so*
-%doc %{_mandir}/man1/*
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+# libltld requires at least one of .la and .so for plugins
+# let's leave *.la, because they are checked first
+%{_libdir}/libextractor_*.la
+%{_mandir}/man1/*
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/*.la
+%attr(755,root,root) %{_libdir}/libextractor.so
+%{_libdir}/libextractor.la
 %{_includedir}/extractor.h
-%doc %{_mandir}/man3/*
+%{_mandir}/man3/*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/libextractor.a
