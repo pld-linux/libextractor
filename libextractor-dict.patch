@@ -1,0 +1,11 @@
+--- libextractor-0.2.7/src/plugins/printable/dictionary-builder.c.orig	2004-04-06 20:52:27.000000000 +0200
++++ libextractor-0.2.7/src/plugins/printable/dictionary-builder.c	2004-04-11 02:13:55.950075760 +0200
+@@ -53,7 +53,7 @@
+   cnt = 0;
+   memset(&line[0], 0, 2048);
+   while (1 == fscanf(dictin, "%s", (char*)&line)) {
+-    words[cnt] = strdup(line);    
++    words[cnt++] = strdup(line);    
+     memset(&line[0], 0, 2048);
+     if (cnt > ALLOCSIZE) {
+       fprintf(stderr, "increase ALLOCSIZE\n");
