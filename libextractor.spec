@@ -1,13 +1,13 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.2.7
+Version:	0.3.0
 Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~400kB smaller than .tar.bz2
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	a43d9bd8b5d1dbcde5231695a36613bf
+# Source0-md5:	547a350f127b82ff03b235b80758267c
 Patch0:		%{name}-dict.patch
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	libltdl-devel
@@ -135,12 +135,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libextractor_lower.so
 %attr(755,root,root) %{_libdir}/libextractor_mime.so
 %attr(755,root,root) %{_libdir}/libextractor_mp3.so
+%attr(755,root,root) %{_libdir}/libextractor_mpeg.so
 %attr(755,root,root) %{_libdir}/libextractor_ogg.so
 %attr(755,root,root) %{_libdir}/libextractor_pdf.so
 %attr(755,root,root) %{_libdir}/libextractor_png.so
 %attr(755,root,root) %{_libdir}/libextractor_ps.so
 %attr(755,root,root) %{_libdir}/libextractor_qt.so
 %attr(755,root,root) %{_libdir}/libextractor_real.so
+%attr(755,root,root) %{_libdir}/libextractor_riff.so
 %attr(755,root,root) %{_libdir}/libextractor_rpm.so
 %attr(755,root,root) %{_libdir}/libextractor_split.so
 %attr(755,root,root) %{_libdir}/libextractor_tiff.so
@@ -153,12 +155,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libextractor_lower.la
 %{_libdir}/libextractor_mime.la
 %{_libdir}/libextractor_mp3.la
+%{_libdir}/libextractor_mpeg.la
 %{_libdir}/libextractor_ogg.la
 %{_libdir}/libextractor_pdf.la
 %{_libdir}/libextractor_png.la
 %{_libdir}/libextractor_ps.la
 %{_libdir}/libextractor_qt.la
 %{_libdir}/libextractor_real.la
+%{_libdir}/libextractor_riff.la
 %{_libdir}/libextractor_rpm.la
 %{_libdir}/libextractor_split.la
 %{_libdir}/libextractor_tiff.la
