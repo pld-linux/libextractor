@@ -2,31 +2,17 @@ Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji meta-danych
 Name:		libextractor
 Version:	0.2.4
-Release:	1
+Release:	0.1
 License:	GPL
 Group:		Libraries
-Requires:	glibc >= 2.2.4
+Source0:	http://www.ovmj.org/%{name}/download/%{name}-%{version}.tar.bz2
+# Source0-md5:	9d059e4b02cac89661816f19458d0bf5
+URL:		http://www.ovmj.org/%{name}/
 Requires:	libvorbis
 Requires:	libogg
 BuildRequires:	libvorbis-devel
 BuildRequires:	libogg-devel
-URL:		http://www.ovmj.org/%{name}/
-Source0:	http://www.ovmj.org/%{name}/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	9d059e4b02cac89661816f19458d0bf5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%package devel
-Summary:	Development files for libextractor
-Summary(pl):	Pliki nag³ówkowe libextractor
-Group:		Development/Libraries
-Requires:	%{name} = %{version}
-
-%package static
-Summary:	Static libextractor libraries
-Summary(pl):	Statyczne biblioteki libextractor
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
-
 
 %description
 libextractor is a simple library for meta-data extraction.
@@ -70,6 +56,12 @@ u¿ywane w podobny sposób, co "file". "file" zna wiêcej typów danych,
 informacji na temat obs³ugiwanych formatów (HTML, JPEG, OGG, MP3, PNG,
 GIF, RPM, RA, RM, PS, PDF, ZIP, QT, ASF).
 
+%package devel
+Summary:	Development files for libextractor
+Summary(pl):	Pliki nag³ówkowe libextractor
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
+
 %description devel
 This package contains files to develop with libextractor, that is
 either to create plugins or to compile applications with libextractor.
@@ -77,6 +69,12 @@ either to create plugins or to compile applications with libextractor.
 %description devel -l pl
 Piki nag³ówkowe wymagane do tworzenia aplikacji i wtyczek
 korzystaj±cych z libextractor.
+
+%package static
+Summary:	Static libextractor libraries
+Summary(pl):	Statyczne biblioteki libextractor
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
 
 %description static
 This package contains static libraries of libextractor.
@@ -89,25 +87,26 @@ Statyczna wersja bibliotek libextractor.
 
 %build
 %configure
-make
+
+%{__make}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%{__make} DESTDIR=$RPM_BUILD_ROOT install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%install
-rm -rf $RPM_BUILD_ROOT
-%makeinstall
+%post 
+/sbin/ldconfig
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%postun 
+/sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libextractor.so
-%attr(755,root,root) %{_libdir}/libextractor.so.*
-%attr(755,root,root) %{_libdir}/libextractor_*.so
-%attr(755,root,root) %{_libdir}/libextractor_*.so.*
 %attr(755,root,root) %{_bindir}/extract
+%attr(755,root,root) %{_libdir}/libextractor*.so*
 %doc %{_mandir}/man1/*
 
 %files devel
