@@ -9,8 +9,11 @@ Group:		Libraries
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
 # Source0-md5:	0e70401b3a1574bf16caf17a4af78398
 URL:		http://www.ovmj.org/libextractor/
+BuildRequires:	autoconf >= 2.57
+BuildRequires:	automake
 BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -74,6 +77,7 @@ Summary:	Development files for libextractor
 Summary(pl):	Pliki nag³ówkowe libextractor
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libltdl-devel
 
 %description devel
 This package contains files to develop with libextractor, that is
@@ -99,8 +103,9 @@ Statyczna wersja bibliotek libextractor.
 %setup -q
 
 %build
-cp /usr/share/automake/config.sub .
-%{__gettextize}
+# gettext is not used yet
+#%%{__gettextize}
+%{__libtoolize} --ltdl
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
