@@ -1,13 +1,13 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.3.11
+Version:	0.4.0
 Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~500kB smaller than .tar.bz2
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	8eed987c66bfd6f33a62e0696d863964
+# Source0-md5:	609f74c08fbc1f454ca2387d7fea1168
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
