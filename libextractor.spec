@@ -26,7 +26,7 @@ libextractor uses a plugin-mechanism that makes it easy to add support
 for more file formats, allowing anybody to add new extractors quickly.
 
 libextractor currently features meta-data extractors for HTML, JPEG,
-OGG, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real Audio and Video,
+Ogg, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real Audio and Video,
 PostScript and PDF documents. It also detects many more MIME-types in
 a fashion similar to the well-known "file" tool.
 
@@ -39,7 +39,7 @@ that can be used to invoke libextractor from the command line.
 "extract" can be used similar to "file", but while "file" currently
 supports a wider range of file types, "extract" should be able to
 provide more precise and more detailed information for the supported
-types of documents (HTML, JPEG, OGG, MP3, PNG, GIF, RPM, RA, RM, PS,
+types of documents (HTML, JPEG, Ogg, MP3, PNG, GIF, RPM, RA, RM, PS,
 PDF, ZIP, QT, ASF).
 
 %description -l pl
@@ -48,7 +48,7 @@ libextractor u¿ywa mechanizmu "wtyczek", dziêki czemu ³atwo jest dodaæ
 wsparcie dla nowych formatów plików.
 
 libextractor obecnie pozwala na pozyskanie metadanych z plików w
-formatach HTML, JPEG, OGG, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real
+formatach HTML, JPEG, Ogg, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real
 Audio i Video, PostScript oraz PDF. Ponadto rozpoznaje du¿o wiêcej
 typów MIME w sposób podobny do dobrze znanego narzêdzia "file".
 
@@ -59,7 +59,7 @@ Ta paczka zawiera te¿ narzêdzie "extract", które pozwala skorzystaæ z
 us³ug libextractor bezpo¶rednio z linii poleceñ. "extract" mo¿e byæ
 u¿ywane w podobny sposób, co "file". "file" zna wiêcej typów danych,
 "extract" natomiast dostarcza bardziej precyzyjnych i szczegó³owych
-informacji na temat obs³ugiwanych formatów (HTML, JPEG, OGG, MP3, PNG,
+informacji na temat obs³ugiwanych formatów (HTML, JPEG, Ogg, MP3, PNG,
 GIF, RPM, RA, RM, PS, PDF, ZIP, QT, ASF).
 
 %package printable
