@@ -99,6 +99,12 @@ Statyczna wersja bibliotek libextractor.
 %setup -q
 
 %build
+cp /usr/share/automake/config.sub .
+%{__gettextize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure
 
 %{__make}
