@@ -1,13 +1,13 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.3.6
+Version:	0.3.7
 Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~500kB smaller than .tar.bz2
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	7df0a3f61b8fad01472ebe97d244e181
+# Source0-md5:	911cedbcbecf4ec27f3a943172cd472b
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -145,7 +145,9 @@ rm -rf $RPM_BUILD_ROOT
 # missing -avoid-version in this dir
 %attr(755,root,root) %{_libdir}/libextractor_hash_md5.so*
 %attr(755,root,root) %{_libdir}/libextractor_hash_sha1.so*
+%attr(755,root,root) %{_libdir}/libextractor_hash_rmd160.so*
 %attr(755,root,root) %{_libdir}/libextractor_html.so
+%attr(755,root,root) %{_libdir}/libextractor_id3v2.so
 %attr(755,root,root) %{_libdir}/libextractor_jpeg.so
 %attr(755,root,root) %{_libdir}/libextractor_lower.so
 %attr(755,root,root) %{_libdir}/libextractor_mime.so
@@ -171,7 +173,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libextractor_gif.la
 %{_libdir}/libextractor_hash_md5.la
 %{_libdir}/libextractor_hash_sha1.la
+%{_libdir}/libextractor_hash_rmd160.la
 %{_libdir}/libextractor_html.la
+%{_libdir}/libextractor_id3v2.la
 %{_libdir}/libextractor_jpeg.la
 %{_libdir}/libextractor_lower.la
 %{_libdir}/libextractor_mime.la
