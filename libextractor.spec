@@ -1,3 +1,6 @@
+#
+%bcond_without	static		# build with shared glib
+#
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
@@ -12,7 +15,11 @@ URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
 BuildRequires:	gettext-devel >= 0.14
+%if %{with static}
 BuildRequires:	glib2-static >= 2.0.0
+%else
+BuildRequires:	glib2-devel >= 2.0.0
+%endif
 BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
@@ -103,6 +110,10 @@ Statyczna wersja bibliotek libextractor.
 
 %prep
 %setup -q
+
+%if %{without static}
+%{__perl} -pi -e 's/-B(static|dynamic)//g' src/plugins/ole2/Makefile.am
+%endif
 
 %build
 %{__gettextize}
