@@ -1,5 +1,5 @@
 Summary:	Meta-data extraction library
-Summary(pl):	Biblioteka do ekstrakcji meta-danych
+Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	0.2.4
 Release:	1
@@ -38,11 +38,11 @@ types of documents (HTML, JPEG, OGG, MP3, PNG, GIF, RPM, RA, RM, PS,
 PDF, ZIP, QT, ASF).
 
 %description -l pl
-libextractor to prosta biblioteka s³u¿±ca do ekstrakcji meta-danych.
+libextractor to prosta biblioteka s³u¿±ca do ekstrakcji metadanych.
 libextractor u¿ywa mechanizmu "wtyczek", dziêki czemu ³atwo jest dodaæ
 wsparcie dla nowych formatów plików.
 
-libextractor obecnie pozwala na pozyskanie meta-danych z plików w
+libextractor obecnie pozwala na pozyskanie metadanych z plików w
 formatach HTML, JPEG, OGG, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real
 Audio i Video, PostScript oraz PDF. Ponadto rozpoznaje du¿o wiêcej
 typów MIME w sposób podobny do dobrze znanego narzêdzia "file".
