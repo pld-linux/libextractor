@@ -1,14 +1,13 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.3.0
+Version:	0.3.2
 Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~400kB smaller than .tar.bz2
 Source0:	http://www.ovmj.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	547a350f127b82ff03b235b80758267c
-Patch0:		%{name}-dict.patch
+# Source0-md5:	16701405da5e11f624978b5bf3dbc014
 URL:		http://www.ovmj.org/libextractor/
 BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
@@ -98,7 +97,6 @@ Statyczna wersja bibliotek libextractor.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %configure
@@ -125,7 +123,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/extract
 %attr(755,root,root) %{_libdir}/libextractor.so.*.*.*
-%attr(755,root,root) %{_libdir}/libextractor_util.so.*.*.*
 # plugins are lt_dlopened without extension, so *.la are needed
 %attr(755,root,root) %{_libdir}/libextractor_asf.so
 %attr(755,root,root) %{_libdir}/libextractor_filename.so
@@ -177,13 +174,10 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libextractor.so
-%attr(755,root,root) %{_libdir}/libextractor_util.so
 %{_libdir}/libextractor.la
-%{_libdir}/libextractor_util.la
 %{_includedir}/extractor.h
 %{_mandir}/man3/*
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libextractor.a
-%{_libdir}/libextractor_util.a
