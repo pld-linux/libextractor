@@ -5,13 +5,14 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.4.2
+Version:	0.5.0
 Release:	1
 License:	GPL
 Group:		Libraries
 # strange, .tar.gz is ~500kB smaller than .tar.bz2
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	d99e1b13a017d39700e376a0edbf7ba2
+# Source0-md5:	5ca78c69a523e54b8c3c08369786f48a
+Patch0:		%{name}-make_python.patch
 URL:		http://gnunet.org/libextractor/
 BuildRequires:	ImageMagick-devel >= 1:6.0.0
 BuildRequires:	autoconf >= 2.57
@@ -26,6 +27,7 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
+BuildRequires:	python-devel >= 1:2.3
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -110,8 +112,22 @@ This package contains static libraries of libextractor.
 %description static -l pl
 Statyczna wersja bibliotek libextractor.
 
+%package -n python-extractor
+Summary:	Python support for libextractor
+Summary(pl):	Modu³ jêzyka Python dla biblioteki libextractor
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+%pyrequires_eq	python-libs
+
+%description -n python-extractor
+Python support for libextractor.
+
+%description -n python-extractor -l pl
+Modu³ jêzyka Python dla biblioteki libextractor.
+
 %prep
 %setup -q
+%patch0 -p1
 
 %if %{without static}
 %{__perl} -pi -e 's/-B(static|dynamic)//g' src/plugins/ole2/Makefile.am
@@ -120,7 +136,7 @@ Statyczna wersja bibliotek libextractor.
 %build
 %{__gettextize}
 %{__libtoolize} --ltdl
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
@@ -241,3 +257,7 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libextractor.a
+
+%files -n python-extractor
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py_sitedir}/*.so
