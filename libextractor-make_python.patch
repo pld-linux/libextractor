@@ -1,0 +1,21 @@
+--- libextractor-0.5.0.orig/src/main/Makefile.am	2005-05-21 20:06:00.000000000 +0200
++++ libextractor-0.5.0/src/main/Makefile.am	2005-05-22 20:40:02.391304776 +0200
+@@ -55,5 +55,5 @@
+   getopt1.c 
+ 
+ install-exec-local:
+-	python libextractor_python_setup.py $(libdir) build
+-	python libextractor_python_setup.py $(libdir) install --prefix=$(PYTHON_PREFIX)
++	python libextractor_python_setup.py .libs build
++	python libextractor_python_setup.py $(libdir) install --prefix=$(DESTDIR)$(PYTHON_PREFIX)
+--- libextractor-0.5.0.orig/src/main/libextractor_python_setup.py	2005-05-13 00:45:03.000000000 +0200
++++ libextractor-0.5.0/src/main/libextractor_python_setup.py	2005-05-22 20:35:28.090004912 +0200
+@@ -1,7 +1,7 @@
+ from distutils.core import Extension, setup
+ import sys
+ 
+-path=sys.argv[0]
++path=sys.argv[1]
+ sys.argv = sys.argv[1:]
+ 
+ cmod = Extension("extractor",["libextractor_python.c"],
