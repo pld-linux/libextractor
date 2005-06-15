@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_with	static		# build with static glib
+%bcond_without	static_libs	# don't build static library
 #
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
@@ -140,7 +141,8 @@ Modu³ jêzyka Python dla biblioteki libextractor.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	%{!?with_static_libs:--disable-static}
 
 %{__make}
 
@@ -254,9 +256,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/extractor.h
 %{_mandir}/man3/*
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libextractor.a
+%endif
 
 %files -n python-extractor
 %defattr(644,root,root,755)
