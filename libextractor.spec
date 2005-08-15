@@ -1,34 +1,27 @@
 #
 # Conditional build:
-%bcond_with	static		# build with static glib
 %bcond_without	static_libs	# don't build static library
 #
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.0
+Version:	0.5.3
 Release:	1
 License:	GPL
 Group:		Libraries
-# strange, .tar.gz is ~500kB smaller than .tar.bz2
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	5ca78c69a523e54b8c3c08369786f48a
-Patch0:		%{name}-make_python.patch
+# Source0-md5:	aab48c75879aab5ad918b1f9f4445558
 URL:		http://gnunet.org/libextractor/
 BuildRequires:	ImageMagick-devel >= 1:6.0.0
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
-BuildRequires:	gettext-devel >= 0.14
-%if %{with static}
-BuildRequires:	glib2-static >= 2.0.0
-%else
+BuildRequires:	gettext-devel >= 0.14.5
 BuildRequires:	glib2-devel >= 2.0.0
-%endif
+BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
-BuildRequires:	python-devel >= 1:2.3
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -86,6 +79,19 @@ libextractor plugins that support printable text in few languages.
 %description printable -l pl
 Wtyczki biblioteki libextractor obs³uguj±ce tekst w kilku jêzykach.
 
+%package thumbnail
+Summary:	Thumbnail plugin for libextractor
+Summary(pl):	Wtyczka obs³uguj±ce miniaturki obrazów dla biblioteki libextractor
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	gtk+2 >= 2:2.6.0
+
+%description thumbnail
+libextractor plugin that supports thumbnails.
+
+%description thumbnail -l pl
+Wtyczka biblioteki libextractor obs³uguj±ca miniaturki obrazów.
+
 %package devel
 Summary:	Development files for libextractor
 Summary(pl):	Pliki nag³ówkowe libextractor
@@ -113,26 +119,8 @@ This package contains static libraries of libextractor.
 %description static -l pl
 Statyczna wersja bibliotek libextractor.
 
-%package -n python-extractor
-Summary:	Python support for libextractor
-Summary(pl):	Modu³ jêzyka Python dla biblioteki libextractor
-Group:		Libraries/Python
-Requires:	%{name} = %{version}-%{release}
-%pyrequires_eq	python-libs
-
-%description -n python-extractor
-Python support for libextractor.
-
-%description -n python-extractor -l pl
-Modu³ jêzyka Python dla biblioteki libextractor.
-
 %prep
 %setup -q
-%patch0 -p1
-
-%if %{without static}
-%{__perl} -pi -e 's/-B(static|dynamic)//g' src/plugins/ole2/Makefile.am
-%endif
 
 %build
 %{__gettextize}
@@ -142,7 +130,7 @@ Modu³ jêzyka Python dla biblioteki libextractor.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{!?with_static_libs:--disable-static}
+	%{?with_static_libs:--enable-static}
 
 %{__make}
 
@@ -174,6 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_deb.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_dvi.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_elf.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_exiv2.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_filename.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_gif.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_hash_md5.so
@@ -201,7 +190,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_rpm.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_split.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tar.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnail.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tiff.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_translit.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_wav.so
@@ -210,6 +198,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_deb.la
 %{_libdir}/%{name}/libextractor_dvi.la
 %{_libdir}/%{name}/libextractor_elf.la
+%{_libdir}/%{name}/libextractor_exiv2.la
 %{_libdir}/%{name}/libextractor_filename.la
 %{_libdir}/%{name}/libextractor_gif.la
 %{_libdir}/%{name}/libextractor_hash_md5.la
@@ -237,7 +226,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_rpm.la
 %{_libdir}/%{name}/libextractor_split.la
 %{_libdir}/%{name}/libextractor_tar.la
-%{_libdir}/%{name}/libextractor_thumbnail.la
 %{_libdir}/%{name}/libextractor_tiff.la
 %{_libdir}/%{name}/libextractor_translit.la
 %{_libdir}/%{name}/libextractor_wav.la
@@ -248,6 +236,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_printable_*.so
 %{_libdir}/%{name}/libextractor_printable_*.la
+
+%files thumbnail
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnail.so
+%{_libdir}/%{name}/libextractor_thumbnail.la
 
 %files devel
 %defattr(644,root,root,755)
@@ -261,7 +254,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libextractor.a
 %endif
-
-%files -n python-extractor
-%defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/*.so
