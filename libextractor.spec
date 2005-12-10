@@ -5,12 +5,13 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.7
+Version:	0.5.8
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	fe08d8f9473fcea6963afcb3d7e858c4
+# Source0-md5:	366840aabd421d61f9b5e8358274a2cc
+Patch0:		%{name}-gcc4.patch
 URL:		http://gnunet.org/libextractor/
 BuildRequires:	ImageMagick-devel >= 1:6.0.0
 BuildRequires:	autoconf >= 2.57
@@ -121,6 +122,7 @@ Statyczna wersja bibliotek libextractor.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__gettextize}
