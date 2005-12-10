@@ -1,0 +1,11 @@
+--- libextractor-0.5.8/src/plugins/exiv2/basicio.hpp.orig	2005-09-18 11:54:32.000000000 +0200
++++ libextractor-0.5.8/src/plugins/exiv2/basicio.hpp	2005-12-10 23:40:40.918829728 +0100
+@@ -488,7 +488,7 @@
+         //! Destructor. Releases all managed memory
+         ~MemIo() {if (isMalloced_) free(data_);}
+ 
+-		void MemIo::wrap(const byte *data, long size);
++		void wrap(const byte *data, long size);
+ 
+         //@}
+ 
