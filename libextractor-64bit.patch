@@ -1,0 +1,24 @@
+pack.c: In function 'cat_unpack':
+pack.c:407: warning: left shift count >= width of type
+pack.c:423: warning: left shift count >= width of type
+
+--- libextractor-0.5.9/src/plugins/pack.c.orig	2005-09-18 11:54:35.000000000 +0200
++++ libextractor-0.5.9/src/plugins/pack.c	2006-02-19 11:44:07.330679750 +0100
+@@ -404,7 +404,7 @@
+ 	*swordp |= *bp++ << 24;
+ 	
+ 	if ( (sizeof(swordp) > 4) && (*swordp & 0x80000000) )
+-	  *swordp |= (~0) << ((sizeof(sword)-4) * 8);
++	  *swordp |= (~0L) << ((sizeof(sword)-4) * 8);
+ 	
+ 	++swordp;
+ 	npacked += 4;
+@@ -420,7 +420,7 @@
+ 	*swordp |= *bp++;
+ 	
+ 	if ( (sizeof(swordp) > 4) && (*swordp & 0x80000000) )
+-	  *swordp |= (~0) << ((sizeof(sword)-4) * 8);
++	  *swordp |= (~0L) << ((sizeof(sword)-4) * 8);
+ 	
+ 	++swordp;
+ 	npacked += 4;
