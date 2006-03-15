@@ -5,17 +5,17 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.10
+Version:	0.5.11
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	a1da675f518d7c6bfff804e0ae0c81d4
+# Source0-md5:	ba67e55e20bff3fca9f7a5dbfea7d7ed
 Patch0:		%{name}-64bit.patch
 URL:		http://gnunet.org/libextractor/
-BuildRequires:	ImageMagick-devel >= 1:6.0.0
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
+BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel >= 0.14.5
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	gtk+2-devel >= 2:2.6.0
@@ -98,6 +98,7 @@ Summary:	Development files for libextractor
 Summary(pl):	Pliki nag³ówkowe libextractor
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	bzip2-devel
 Requires:	libltdl-devel
 
 %description devel
@@ -195,6 +196,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tiff.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_translit.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_wav.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_word.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_zip.so
 %{_libdir}/%{name}/libextractor_asf.la
 %{_libdir}/%{name}/libextractor_deb.la
@@ -231,6 +233,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_tiff.la
 %{_libdir}/%{name}/libextractor_translit.la
 %{_libdir}/%{name}/libextractor_wav.la
+%{_libdir}/%{name}/libextractor_word.la
 %{_libdir}/%{name}/libextractor_zip.la
 %{_mandir}/man1/*
 
