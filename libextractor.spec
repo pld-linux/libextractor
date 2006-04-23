@@ -5,12 +5,12 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.11
+Version:	0.5.12
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	ba67e55e20bff3fca9f7a5dbfea7d7ed
+# Source0-md5:	a60e580e309f505d363f88d1a8cee2ff
 Patch0:		%{name}-64bit.patch
 URL:		http://gnunet.org/libextractor/
 BuildRequires:	autoconf >= 2.57
