@@ -5,12 +5,12 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.13
+Version:	0.5.14
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	aa41b39d1ae2ee74e033f4b0a8db1c31
+# Source0-md5:	7e1d281cde1b2d2a7509626e45872818
 Patch0:		%{name}-64bit.patch
 URL:		http://gnunet.org/libextractor/
 BuildRequires:	autoconf >= 2.57
@@ -24,6 +24,7 @@ BuildRequires:	libltdl-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
+BuildRequires:	mpeg2dec-devel
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
