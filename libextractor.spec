@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_without	qt		# don't build Qt-based thumbnail plugin
 %bcond_without	static_libs	# don't build static library
 #
 Summary:	Meta-data extraction library
@@ -12,7 +13,13 @@ Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
 # Source0-md5:	151a3027090c431f69b93560bc3c9908
 Patch0:		%{name}-64bit.patch
+Patch1:		%{name}-make.patch
+Patch2:		%{name}-qt.patch
 URL:		http://gnunet.org/libextractor/
+%if %{with qt}
+BuildRequires:	QtGui-devel >= 4.0
+BuildRequires:	QtSvg-devel >= 4.0
+%endif
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
@@ -83,17 +90,31 @@ libextractor plugins that support printable text in few languages.
 Wtyczki biblioteki libextractor obs³uguj±ce tekst w kilku jêzykach.
 
 %package thumbnail
-Summary:	Thumbnail plugin for libextractor
-Summary(pl):	Wtyczka obs³uguj±ce miniaturki obrazów dla biblioteki libextractor
+Summary:	GTK+ Thumbnail plugin for libextractor
+Summary(pl):	Wtyczka obs³uguj±ca miniaturki obrazów poprzez GTK+ dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2 >= 2:2.6.0
 
 %description thumbnail
-libextractor plugin that supports thumbnails.
+libextractor plugin that supports thumbnails through GTK+.
 
 %description thumbnail -l pl
-Wtyczka biblioteki libextractor obs³uguj±ca miniaturki obrazów.
+Wtyczka biblioteki libextractor obs³uguj±ca miniaturki obrazów poprzez
+GTK+.
+
+%package thumbnail-qt
+Summary:	Qt Thumbnail plugin for libextractor
+Summary(pl):	Wtyczka obs³uguj±ce miniaturki obrazów poprzez Qt dla biblioteki libextractor
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description thumbnail-qt
+libextractor plugin that supports thumbnails through Qt.
+
+%description thumbnail-qt -l pl
+Wtyczka biblioteki libextractor obs³uguj±ca miniaturki obrazów poprzez
+Qt.
 
 %package devel
 Summary:	Development files for libextractor
@@ -126,6 +147,8 @@ Statyczna wersja bibliotek libextractor.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %{__gettextize}
@@ -134,8 +157,10 @@ Statyczna wersja bibliotek libextractor.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+%{?with_qt:CPPFLAGS="-I/usr/include/qt4 -I/usr/include/qt4/Qt"}
 %configure \
-	%{?with_static_libs:--enable-static}
+	%{?with_static_libs:--enable-static} \
+	%{?with_qt:--with-qt}
 
 %{__make}
 
@@ -244,8 +269,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files thumbnail
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnail.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnailgtk.so
 %{_libdir}/%{name}/libextractor_thumbnailgtk.la
+
+%files thumbnail-qt
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnailqt.so
+%{_libdir}/%{name}/libextractor_thumbnailqt.la
 
 %files devel
 %defattr(644,root,root,755)
