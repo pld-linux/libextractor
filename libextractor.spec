@@ -5,12 +5,12 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.14
+Version:	0.5.15
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	7e1d281cde1b2d2a7509626e45872818
+# Source0-md5:	151a3027090c431f69b93560bc3c9908
 Patch0:		%{name}-64bit.patch
 URL:		http://gnunet.org/libextractor/
 BuildRequires:	autoconf >= 2.57
@@ -244,8 +244,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files thumbnail
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnail.so
-%{_libdir}/%{name}/libextractor_thumbnail.la
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnailgtk.so
+%{_libdir}/%{name}/libextractor_thumbnailgtk.la
 
 %files devel
 %defattr(644,root,root,755)
