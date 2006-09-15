@@ -1,0 +1,25 @@
+--- libextractor-0.5.15/src/plugins/Makefile.am.orig	2006-09-07 16:09:16.000000000 +0200
++++ libextractor-0.5.15/src/plugins/Makefile.am	2006-09-15 23:54:56.488415250 +0200
+@@ -309,19 +309,14 @@
+   $(PLUGINFLAGS) $(retaincommand) -lQtCore4 -lQtGui4 $(svgflags)
+ 
+ install-exec-hook:
+-	mkdir $(DESTDIR)$(plugindir) &> /dev/null
++	install -d $(DESTDIR)$(plugindir) 2> /dev/null
+ 	rm -f $(DESTDIR)$(plugindir)/libextractor_thumbnail$(LIBEXT); \
+ 	rm -f $(DESTDIR)$(plugindir)/libextractor_thumbnail.la; \
+ 	if test "$(thumbdir)" != ""; then \
+-		if test "$(thumbqt)" != ""; then \
+-			$(LN_S) $(DESTDIR)$(plugindir)/libextractor_thumbnailqt$(LIBEXT) \
++			$(LN_S) $(plugindir)/libextractor_thumbnailgtk$(LIBEXT) \
+ 				$(DESTDIR)$(plugindir)/libextractor_thumbnail$(LIBEXT); \
+-		else \
+-			$(LN_S) $(DESTDIR)$(plugindir)/libextractor_thumbnailgtk$(LIBEXT) \
+-				$(DESTDIR)$(plugindir)/libextractor_thumbnail$(LIBEXT); \
+-		fi; \
+ 	else \
+-		$(LN_S) $(DESTDIR)$(plugindir)/libextractor_thumbnailqt$(LIBEXT) \
++		$(LN_S) $(plugindir)/libextractor_thumbnailqt$(LIBEXT) \
+ 			$(DESTDIR)$(plugindir)/libextractor_thumbnail$(LIBEXT); \
+ 	fi;
+ 
