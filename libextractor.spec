@@ -6,12 +6,12 @@
 Summary:	Meta-data extraction library
 Summary(pl):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.15
+Version:	0.5.16
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	151a3027090c431f69b93560bc3c9908
+# Source0-md5:	537c79b827406741a2f9c62ab77cc513
 Patch0:		%{name}-64bit.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-qt.patch
@@ -208,6 +208,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_mime.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_mp3.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_mpeg.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_nsf.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ogg.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ole2.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_oo.so
@@ -244,6 +245,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_mime.la
 %{_libdir}/%{name}/libextractor_mp3.la
 %{_libdir}/%{name}/libextractor_mpeg.la
+%{_libdir}/%{name}/libextractor_nsf.la
 %{_libdir}/%{name}/libextractor_ogg.la
 %{_libdir}/%{name}/libextractor_ole2.la
 %{_libdir}/%{name}/libextractor_oo.la
