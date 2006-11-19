@@ -122,6 +122,7 @@ Summary(pl):	Pliki nag³ówkowe libextractor
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	bzip2-devel
+Requires:	libgsf-devel
 Requires:	libltdl-devel
 
 %description devel
