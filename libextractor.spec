@@ -4,7 +4,7 @@
 %bcond_without	static_libs	# don't build static library
 #
 Summary:	Meta-data extraction library
-Summary(pl):	Biblioteka do ekstrakcji metadanych
+Summary(pl.UTF-8):   Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	0.5.16
 Release:	1
@@ -57,41 +57,41 @@ provide more precise and more detailed information for the supported
 types of documents (HTML, JPEG, Ogg, MP3, PNG, GIF, RPM, RA, RM, PS,
 PDF, ZIP, QT, ASF).
 
-%description -l pl
-libextractor to prosta biblioteka s≥uø±ca do ekstrakcji metadanych.
-libextractor uøywa mechanizmu "wtyczek", dziÍki czemu ≥atwo jest dodaÊ
-wsparcie dla nowych formatÛw plikÛw.
+%description -l pl.UTF-8
+libextractor to prosta biblioteka s≈Çu≈ºƒÖca do ekstrakcji metadanych.
+libextractor u≈ºywa mechanizmu "wtyczek", dziƒôki czemu ≈Çatwo jest dodaƒá
+wsparcie dla nowych format√≥w plik√≥w.
 
-libextractor obecnie pozwala na pozyskanie metadanych z plikÛw w
+libextractor obecnie pozwala na pozyskanie metadanych z plik√≥w w
 formatach HTML, JPEG, Ogg, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real
-Audio i Video, PostScript oraz PDF. Ponadto rozpoznaje duøo wiÍcej
-typÛw MIME w sposÛb podobny do dobrze znanego narzÍdzia "file".
+Audio i Video, PostScript oraz PDF. Ponadto rozpoznaje du≈ºo wiƒôcej
+typ√≥w MIME w spos√≥b podobny do dobrze znanego narzƒôdzia "file".
 
-Kaøda informacja pobrana z pliku naleøy do jednej z oko≥o 40
-kategorii (np. tytu≥, autor, opis, typ MIME).
+Ka≈ºda informacja pobrana z pliku nale≈ºy do jednej z oko≈Ço 40
+kategorii (np. tytu≈Ç, autor, opis, typ MIME).
 
-Ta paczka zawiera teø narzÍdzie "extract", ktÛre pozwala skorzystaÊ z
-us≥ug libextractor bezpo∂rednio z linii poleceÒ. "extract" moøe byÊ
-uøywane w podobny sposÛb, co "file". "file" zna wiÍcej typÛw danych,
-"extract" natomiast dostarcza bardziej precyzyjnych i szczegÛ≥owych
-informacji na temat obs≥ugiwanych formatÛw (HTML, JPEG, Ogg, MP3, PNG,
+Ta paczka zawiera te≈º narzƒôdzie "extract", kt√≥re pozwala skorzystaƒá z
+us≈Çug libextractor bezpo≈õrednio z linii polece≈Ñ. "extract" mo≈ºe byƒá
+u≈ºywane w podobny spos√≥b, co "file". "file" zna wiƒôcej typ√≥w danych,
+"extract" natomiast dostarcza bardziej precyzyjnych i szczeg√≥≈Çowych
+informacji na temat obs≈Çugiwanych format√≥w (HTML, JPEG, Ogg, MP3, PNG,
 GIF, RPM, RA, RM, PS, PDF, ZIP, QT, ASF).
 
 %package printable
 Summary:	Printable text support plugins for libextractor
-Summary(pl):	Wtyczki obs≥uguj±ce tekst dla biblioteki libextractor
+Summary(pl.UTF-8):   Wtyczki obs≈ÇugujƒÖce tekst dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description printable
 libextractor plugins that support printable text in few languages.
 
-%description printable -l pl
-Wtyczki biblioteki libextractor obs≥uguj±ce tekst w kilku jÍzykach.
+%description printable -l pl.UTF-8
+Wtyczki biblioteki libextractor obs≈ÇugujƒÖce tekst w kilku jƒôzykach.
 
 %package thumbnail
 Summary:	GTK+ Thumbnail plugin for libextractor
-Summary(pl):	Wtyczka obs≥uguj±ca miniaturki obrazÛw poprzez GTK+ dla biblioteki libextractor
+Summary(pl.UTF-8):   Wtyczka obs≈ÇugujƒÖca miniaturki obraz√≥w poprzez GTK+ dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2 >= 2:2.6.0
@@ -99,26 +99,26 @@ Requires:	gtk+2 >= 2:2.6.0
 %description thumbnail
 libextractor plugin that supports thumbnails through GTK+.
 
-%description thumbnail -l pl
-Wtyczka biblioteki libextractor obs≥uguj±ca miniaturki obrazÛw poprzez
+%description thumbnail -l pl.UTF-8
+Wtyczka biblioteki libextractor obs≈ÇugujƒÖca miniaturki obraz√≥w poprzez
 GTK+.
 
 %package thumbnail-qt
 Summary:	Qt Thumbnail plugin for libextractor
-Summary(pl):	Wtyczka obs≥uguj±ce miniaturki obrazÛw poprzez Qt dla biblioteki libextractor
+Summary(pl.UTF-8):   Wtyczka obs≈ÇugujƒÖce miniaturki obraz√≥w poprzez Qt dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description thumbnail-qt
 libextractor plugin that supports thumbnails through Qt.
 
-%description thumbnail-qt -l pl
-Wtyczka biblioteki libextractor obs≥uguj±ca miniaturki obrazÛw poprzez
+%description thumbnail-qt -l pl.UTF-8
+Wtyczka biblioteki libextractor obs≈ÇugujƒÖca miniaturki obraz√≥w poprzez
 Qt.
 
 %package devel
 Summary:	Development files for libextractor
-Summary(pl):	Pliki nag≥Ûwkowe libextractor
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe libextractor
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	bzip2-devel
@@ -129,20 +129,20 @@ Requires:	libltdl-devel
 This package contains files to develop with libextractor, that is
 either to create plugins or to compile applications with libextractor.
 
-%description devel -l pl
-Piki nag≥Ûwkowe wymagane do tworzenia aplikacji i wtyczek
-korzystaj±cych z libextractor.
+%description devel -l pl.UTF-8
+Piki nag≈Ç√≥wkowe wymagane do tworzenia aplikacji i wtyczek
+korzystajƒÖcych z libextractor.
 
 %package static
 Summary:	Static libextractor libraries
-Summary(pl):	Statyczne biblioteki libextractor
+Summary(pl.UTF-8):   Statyczne biblioteki libextractor
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 This package contains static libraries of libextractor.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna wersja bibliotek libextractor.
 
 %prep
