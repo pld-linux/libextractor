@@ -4,7 +4,7 @@
 %bcond_without	static_libs	# don't build static library
 #
 Summary:	Meta-data extraction library
-Summary(pl.UTF-8):   Biblioteka do ekstrakcji metadanych
+Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	0.5.16
 Release:	1
@@ -79,7 +79,7 @@ GIF, RPM, RA, RM, PS, PDF, ZIP, QT, ASF).
 
 %package printable
 Summary:	Printable text support plugins for libextractor
-Summary(pl.UTF-8):   Wtyczki obsługujące tekst dla biblioteki libextractor
+Summary(pl.UTF-8):	Wtyczki obsługujące tekst dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -91,7 +91,7 @@ Wtyczki biblioteki libextractor obsługujące tekst w kilku językach.
 
 %package thumbnail
 Summary:	GTK+ Thumbnail plugin for libextractor
-Summary(pl.UTF-8):   Wtyczka obsługująca miniaturki obrazów poprzez GTK+ dla biblioteki libextractor
+Summary(pl.UTF-8):	Wtyczka obsługująca miniaturki obrazów poprzez GTK+ dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2 >= 2:2.6.0
@@ -105,7 +105,7 @@ GTK+.
 
 %package thumbnail-qt
 Summary:	Qt Thumbnail plugin for libextractor
-Summary(pl.UTF-8):   Wtyczka obsługujące miniaturki obrazów poprzez Qt dla biblioteki libextractor
+Summary(pl.UTF-8):	Wtyczka obsługujące miniaturki obrazów poprzez Qt dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -118,7 +118,7 @@ Qt.
 
 %package devel
 Summary:	Development files for libextractor
-Summary(pl.UTF-8):   Pliki nagłówkowe libextractor
+Summary(pl.UTF-8):	Pliki nagłówkowe libextractor
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	bzip2-devel
@@ -135,7 +135,7 @@ korzystających z libextractor.
 
 %package static
 Summary:	Static libextractor libraries
-Summary(pl.UTF-8):   Statyczne biblioteki libextractor
+Summary(pl.UTF-8):	Statyczne biblioteki libextractor
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
