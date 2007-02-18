@@ -6,19 +6,18 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.16
+Version:	0.5.17a
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	537c79b827406741a2f9c62ab77cc513
+# Source0-md5:	10b67ec5387e2b819e928c14436e4635
 Patch0:		%{name}-64bit.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-qt.patch
 URL:		http://gnunet.org/libextractor/
 %if %{with qt}
-BuildRequires:	QtGui-devel >= 4.0
-BuildRequires:	QtSvg-devel >= 4.0
+BuildRequires:	QtSvg-devel >= 4.0.1
 %endif
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
@@ -32,8 +31,11 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
 BuildRequires:	mpeg2dec-devel
+BuildRequires:	pkgconfig
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_noautoreqfiles		%{_libdir}/%{name}/libextractor_.*\\.la
 
 %description
 libextractor is a simple library for meta-data extraction.
@@ -220,6 +222,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_real.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_riff.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_rpm.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_sid.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_split.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tar.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tiff.so
@@ -257,6 +260,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_real.la
 %{_libdir}/%{name}/libextractor_riff.la
 %{_libdir}/%{name}/libextractor_rpm.la
+%{_libdir}/%{name}/libextractor_sid.la
 %{_libdir}/%{name}/libextractor_split.la
 %{_libdir}/%{name}/libextractor_tar.la
 %{_libdir}/%{name}/libextractor_tiff.la
@@ -286,6 +290,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libextractor.so
 %{_libdir}/libextractor.la
 %{_includedir}/extractor.h
+%{_pkgconfigdir}/libextractor.pc
 %{_mandir}/man3/*
 
 %if %{with static_libs}
