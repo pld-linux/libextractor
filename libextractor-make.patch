@@ -1,27 +1,11 @@
---- libextractor-0.5.16/src/plugins/Makefile.am.orig	2006-11-11 03:45:43.000000000 +0100
-+++ libextractor-0.5.16/src/plugins/Makefile.am	2006-11-19 12:06:59.851016250 +0100
-@@ -317,11 +317,11 @@
-   $(PLUGINFLAGS) $(retaincommand) -lQtCore4 -lQtGui4 $(svgflags)
+--- libextractor-0.5.19/src/plugins/Makefile.am.orig	2007-12-31 14:17:46.000000000 +0100
++++ libextractor-0.5.19/src/plugins/Makefile.am	2008-01-22 21:45:54.695968011 +0100
+@@ -373,7 +373,7 @@
+   $(QT_CFLAGS) $(QT_SVG_CFLAGS)
  
  install-exec-hook:
 -	mkdir -p $(DESTDIR)$(plugindir) &> /dev/null || true
 +	mkdir -p $(DESTDIR)$(plugindir) 2> /dev/null || true
- 	rm -f $(DESTDIR)$(plugindir)/libextractor_thumbnail$(LIBEXT); \
- 	rm -f $(DESTDIR)$(plugindir)/libextractor_thumbnail.la; \
- 	if test "$(thumbdir)" != ""; then \
--		if test "$(thumbqt)" != ""; then \
-+		if false; then \
- 			$(LN_S) $(plugindir)/libextractor_thumbnailqt$(LIBEXT) \
- 				$(DESTDIR)$(plugindir)/libextractor_thumbnail$(LIBEXT); \
- 		else \
---- libextractor-0.5.16/src/plugins/exiv2/Makefile.am.orig	2006-03-11 01:12:32.000000000 +0100
-+++ libextractor-0.5.16/src/plugins/exiv2/Makefile.am	2006-11-19 12:45:14.022393000 +0100
-@@ -6,7 +6,7 @@
-  libextractor_exiv2.la
- 
- libextractor_exiv2_la_LINK = \
--  /bin/sh ../../../libtool --mode=link $(CXXLD) -o libextractor_exiv2.la
-+  /bin/sh ../../../libtool --mode=link $(CXXLD) $(LDFLAGS) $(libextractor_exiv2_la_LDFLAGS) -o libextractor_exiv2.la
- libextractor_exiv2_la_LDFLAGS = \
-   $(XTRA_CPPLIBS) -lpthread \
-   $(PLUGINFLAGS) $(retaincommand)
+ 	rm -f $(DESTDIR)$(plugindir)/libextractor_thumbnail$(LIBEXT)
+ 	rm -f $(DESTDIR)$(plugindir)/libextractor_thumbnail.la
+ 	if test "$(thumbgtk)" != ""; then \
