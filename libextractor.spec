@@ -6,15 +6,15 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.17a
-Release:	2
+Version:	0.5.19a
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	10b67ec5387e2b819e928c14436e4635
+# Source0-md5:	4716cd95d67a8f08781440ea1c7187a6
 Patch0:		%{name}-64bit.patch
 Patch1:		%{name}-make.patch
-Patch2:		%{name}-qt.patch
+Patch2:		%{name}-info.patch
 URL:		http://gnunet.org/libextractor/
 %if %{with qt}
 BuildRequires:	QtSvg-devel >= 4.0.1
@@ -23,6 +23,7 @@ BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel >= 0.14.5
+BuildRequires:	flac-devel
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	libgsf-devel
@@ -32,6 +33,7 @@ BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
 BuildRequires:	mpeg2dec-devel
 BuildRequires:	pkgconfig
+BuildRequires:	texinfo
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -184,11 +186,18 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post devel
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir %{_infodir} >/dev/null 2>&1
+
+%postun devel
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir %{_infodir} >/dev/null 2>&1
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/extract
 %attr(755,root,root) %{_libdir}/libextractor.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libextractor.so.1
 # plugins are lt_dlopened without extension, so *.la are needed
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_asf.so
@@ -197,6 +206,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_elf.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_exiv2.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_filename.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_flac.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_flv.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_gif.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_hash_md5.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_hash_rmd160.so
@@ -212,6 +223,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_mp3.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_mpeg.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_nsf.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_nsfe.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ogg.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ole2.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_oo.so
@@ -235,6 +247,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_elf.la
 %{_libdir}/%{name}/libextractor_exiv2.la
 %{_libdir}/%{name}/libextractor_filename.la
+%{_libdir}/%{name}/libextractor_flac.la
+%{_libdir}/%{name}/libextractor_flv.la
 %{_libdir}/%{name}/libextractor_gif.la
 %{_libdir}/%{name}/libextractor_hash_md5.la
 %{_libdir}/%{name}/libextractor_hash_rmd160.la
@@ -250,6 +264,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_mp3.la
 %{_libdir}/%{name}/libextractor_mpeg.la
 %{_libdir}/%{name}/libextractor_nsf.la
+%{_libdir}/%{name}/libextractor_nsfe.la
 %{_libdir}/%{name}/libextractor_ogg.la
 %{_libdir}/%{name}/libextractor_ole2.la
 %{_libdir}/%{name}/libextractor_oo.la
@@ -267,7 +282,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_translit.la
 %{_libdir}/%{name}/libextractor_wav.la
 %{_libdir}/%{name}/libextractor_zip.la
-%{_mandir}/man1/*
+%{_mandir}/man1/extract.1*
 
 %files printable
 %defattr(644,root,root,755)
@@ -291,7 +306,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libextractor.la
 %{_includedir}/extractor.h
 %{_pkgconfigdir}/libextractor.pc
-%{_mandir}/man3/*
+%{_mandir}/man3/libextractor.3*
+%{_infodir}/extractor.info*
 
 %if %{with static_libs}
 %files static
