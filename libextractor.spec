@@ -8,7 +8,7 @@ Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	0.5.19a
 Release:	1
-License:	GPL
+License:	GPL v2+
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
 # Source0-md5:	4716cd95d67a8f08781440ea1c7187a6
