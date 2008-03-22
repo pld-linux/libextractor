@@ -1,0 +1,20 @@
+--- libextractor-0.5.19a/src/main/Makefile.am.orig	2007-01-10 05:14:09.000000000 +0100
++++ libextractor-0.5.19a/src/main/Makefile.am	2008-03-22 12:23:43.319053024 +0100
+@@ -14,7 +14,7 @@
+ bin_PROGRAMS = extract
+ 
+ extract_LDADD = \
+-  $(top_builddir)/src/main/libextractor.la 
++  libextractor.la 
+ 
+ if !MINGW
+ if !SOMEBSD
+@@ -70,7 +70,7 @@
+ test_binary_SOURCES = \
+   test_binary.c
+ test_binary_LDADD = \
+-  $(top_builddir)/src/main/libextractor.la
++  libextractor.la
+ 
+ 
+ 
