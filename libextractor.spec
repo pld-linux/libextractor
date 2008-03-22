@@ -15,6 +15,7 @@ Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
 Patch0:		%{name}-64bit.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-info.patch
+Patch3:		%{name}-pmake.patch
 URL:		http://gnunet.org/libextractor/
 %if %{with qt}
 BuildRequires:	QtSvg-devel >= 4.0.1
@@ -154,10 +155,11 @@ Statyczna wersja bibliotek libextractor.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__gettextize}
-%{__libtoolize} --ltdl
+%{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
