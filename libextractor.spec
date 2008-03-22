@@ -6,16 +6,17 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.19a
+Version:	0.5.20
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	4716cd95d67a8f08781440ea1c7187a6
+# Source0-md5:	b71833f1c1b8299b01df2d7669600030
 Patch0:		%{name}-64bit.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-info.patch
 Patch3:		%{name}-pmake.patch
+Patch4:		%{name}-lt.patch
 URL:		http://gnunet.org/libextractor/
 %if %{with qt}
 BuildRequires:	QtSvg-devel >= 4.0.1
@@ -156,6 +157,7 @@ Statyczna wersja bibliotek libextractor.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__gettextize}
@@ -202,6 +204,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libextractor.so.1
 # plugins are lt_dlopened without extension, so *.la are needed
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_applefile.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_asf.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_deb.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_dvi.so
@@ -243,6 +246,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_translit.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_wav.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_zip.so
+%{_libdir}/%{name}/libextractor_applefile.la
 %{_libdir}/%{name}/libextractor_asf.la
 %{_libdir}/%{name}/libextractor_deb.la
 %{_libdir}/%{name}/libextractor_dvi.la
