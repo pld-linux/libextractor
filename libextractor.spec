@@ -6,22 +6,22 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.20
-Release:	5
+Version:	0.5.21
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	b71833f1c1b8299b01df2d7669600030
+# Source0-md5:	5de77668914b27e56cf99f961de26b09
 Patch0:		%{name}-64bit.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-info.patch
 Patch3:		%{name}-pmake.patch
-Patch4:		%{name}-lt.patch
+Patch4:		%{name}-rpm.patch
 URL:		http://gnunet.org/libextractor/
 %if %{with qt}
 BuildRequires:	QtSvg-devel >= 4.0.1
 %endif
-BuildRequires:	autoconf >= 2.57
+BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel >= 0.14.5
@@ -35,6 +35,7 @@ BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libvorbis-devel
 BuildRequires:	mpeg2dec-devel
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-devel
 BuildRequires:	texinfo
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -190,10 +191,10 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%post devel	-p	/sbin/postshell
+%post	devel -p /sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
-%postun devel	-p	/sbin/postshell
+%postun	devel -p /sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files -f %{name}.lang
@@ -221,6 +222,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v2.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v23.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v24.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_it.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_jpeg.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_lower.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_man.so
@@ -239,12 +241,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_real.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_riff.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_rpm.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_s3m.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_sid.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_split.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tar.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tiff.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_translit.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_wav.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_xm.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_zip.so
 %{_libdir}/%{name}/libextractor_applefile.la
 %{_libdir}/%{name}/libextractor_asf.la
@@ -263,6 +267,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_id3v2.la
 %{_libdir}/%{name}/libextractor_id3v23.la
 %{_libdir}/%{name}/libextractor_id3v24.la
+%{_libdir}/%{name}/libextractor_it.la
 %{_libdir}/%{name}/libextractor_jpeg.la
 %{_libdir}/%{name}/libextractor_lower.la
 %{_libdir}/%{name}/libextractor_man.la
@@ -281,12 +286,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/libextractor_real.la
 %{_libdir}/%{name}/libextractor_riff.la
 %{_libdir}/%{name}/libextractor_rpm.la
+%{_libdir}/%{name}/libextractor_s3m.la
 %{_libdir}/%{name}/libextractor_sid.la
 %{_libdir}/%{name}/libextractor_split.la
 %{_libdir}/%{name}/libextractor_tar.la
 %{_libdir}/%{name}/libextractor_tiff.la
 %{_libdir}/%{name}/libextractor_translit.la
 %{_libdir}/%{name}/libextractor_wav.la
+%{_libdir}/%{name}/libextractor_xm.la
 %{_libdir}/%{name}/libextractor_zip.la
 %{_mandir}/man1/extract.1*
 
