@@ -6,12 +6,12 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.5.21
+Version:	0.5.22
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://gnunet.org/libextractor/download/%{name}-%{version}.tar.gz
-# Source0-md5:	5de77668914b27e56cf99f961de26b09
+# Source0-md5:	f6d6ea1264a471189eee99728b983c4e
 Patch0:		%{name}-64bit.patch
 Patch1:		%{name}-make.patch
 Patch2:		%{name}-info.patch
@@ -202,7 +202,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/extract
 %attr(755,root,root) %{_libdir}/libextractor.so.*.*.*
+%attr(755,root,root) %{_libdir}/libextractor_common.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libextractor.so.1
+%attr(755,root,root) %ghost %{_libdir}/libextractor_common.so.0
 # plugins are lt_dlopened without extension, so *.la are needed
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_applefile.so
@@ -316,7 +318,9 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libextractor.so
+%attr(755,root,root) %{_libdir}/libextractor_common.so
 %{_libdir}/libextractor.la
+%{_libdir}/libextractor_common.la
 %{_includedir}/extractor.h
 %{_pkgconfigdir}/libextractor.pc
 %{_mandir}/man3/libextractor.3*
@@ -326,4 +330,5 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libextractor.a
+%{_libdir}/libextractor_common.a
 %endif
