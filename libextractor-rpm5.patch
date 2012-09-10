@@ -1,0 +1,112 @@
+diff --git a/configure.ac b/configure.ac
+index 192a838..4ddd127 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -200,12 +200,11 @@ AC_CHECK_LIB(bz2, BZ2_decompress,
+          AM_CONDITIONAL(HAVE_BZ2, false))],
+          AM_CONDITIONAL(HAVE_BZ2, false))
+ 
+-AC_CHECK_LIB(rpm, rpmReadPackageFile,
+-        [AC_CHECK_HEADERS([rpm/rpmlib.h],
+-          AM_CONDITIONAL(HAVE_LIBRPM, true)
+-          AC_DEFINE(HAVE_LIBRPM,1,[Have librpm]),
+-         AM_CONDITIONAL(HAVE_LIBRPM, false))],
+-         AM_CONDITIONAL(HAVE_LIBRPM, false))
++PKG_CHECK_MODULES(RPM, rpm,
++		  AM_CONDITIONAL(HAVE_LIBRPM, true)
++		  AC_DEFINE([HAVE_LIBRPM],[1], "RPM..."),
++		  AM_CONDITIONAL(HAVE_LIBRPM, false)
++		  )
+ 
+ AC_CHECK_LIB(mpeg2, mpeg2_init,
+         [AC_CHECK_HEADERS([mpeg2dec/mpeg2.h],
+diff --git a/src/plugins/Makefile.am b/src/plugins/Makefile.am
+index b3dd1de..7201699 100644
+--- a/src/plugins/Makefile.am
++++ b/src/plugins/Makefile.am
+@@ -1,4 +1,4 @@
+-INCLUDES = -I$(top_srcdir)/src/include -I$(top_srcdir)/src/common
++INCLUDES = -I$(top_srcdir)/src/include -I$(top_srcdir)/src/common $(RPM_CFLAGS)
+ 
+ # install plugins under:
+ plugindir = $(libdir)/@RPLUGINDIR@
+diff --git a/src/plugins/rpm_extractor.c b/src/plugins/rpm_extractor.c
+index f8ed431..157af07 100644
+--- a/src/plugins/rpm_extractor.c
++++ b/src/plugins/rpm_extractor.c
+@@ -21,9 +21,12 @@
+ #include "platform.h"
+ #include "extractor.h"
+ #include <stdint.h>
+-#include <rpm/rpmlib.h>
+-#include <rpm/rpmts.h>
+-#include <rpm/rpmlog.h>
++#include <rpmcli.h>
++#include <rpmcli.h>
++#include <rpmio.h>
++#include <rpmtag.h>
++#include <rpmts.h>
++#include <rpmlog.h>
+ #include <pthread.h>
+ #include <sys/types.h>
+ #include <signal.h>
+@@ -170,7 +173,7 @@ EXTRACTOR_rpm_extract (const char *data,
+   const char *str;
+   Header hdr;
+   HeaderIterator hi;
+-  rpmtd p;
++  HE_t p;
+   int i;
+   FD_t fdi;
+   rpmRC rc;
+@@ -218,33 +221,42 @@ EXTRACTOR_rpm_extract (const char *data,
+ 		 "application/x-rpm",
+ 		 strlen ("application/x-rpm") +1))
+     return 1;
+-  hi = headerInitIterator (hdr);
+-  p = rpmtdNew ();
+-  while (1 == headerNext (hi, p))
++  hi = headerInit(hdr);
++  p = (HE_t)memset(alloca(sizeof(*p)), 0, sizeof(*p));
++  while (1 == headerNext (hi, p, 0))
+     {
+       i = 0;
+       while (tests[i].rtype != 0)
+         {
+           if (tests[i].rtype == p->tag)
+             {
+-              switch (p->type)
++              switch (p->t)
+                 {
+                 case RPM_STRING_ARRAY_TYPE:
++		    if (0 != proc (proc_cls, 
++                                "rpm",
++                                tests[i].type,
++                                EXTRACTOR_METAFORMAT_UTF8,
++                                "text/plain",
++                                p->p.str,
++                                strlen (p->p.str) +1))
++			  return 1;
++	      	     break;
+                 case RPM_I18NSTRING_TYPE:
+                 case RPM_STRING_TYPE:
+-                    while (NULL != (str = rpmtdNextString (p))) 
++		    for(p->ix = 0; p->ix < p->c; p->ix++)
+ 		      {
+ 			if (0 != proc (proc_cls, 
+ 				       "rpm",
+ 				       tests[i].type,
+ 				       EXTRACTOR_METAFORMAT_UTF8,
+ 				       "text/plain",
+-				       str,
+-				       strlen (str) +1))
++				       p->p.argv[p->ix],
++				       strlen (p->p.argv[p->ix]) +1))
+ 			  return 1;
+ 		      }
+                     break;
+-                case RPM_INT32_TYPE:
++                case RPM_UINT32_TYPE:
+                   {
+                     if (p->tag == RPMTAG_BUILDTIME)
+                       {

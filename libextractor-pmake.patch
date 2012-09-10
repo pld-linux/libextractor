@@ -10,66 +10,11 @@
  if !MINGW
  if !SOMEBSD
 @@ -70,7 +70,7 @@
- test_binary_SOURCES = \
-   test_binary.c
- test_binary_LDADD = \
--  $(top_builddir)/src/main/libextractor.la
-+  libextractor.la
  
  
+ LDADD = \
+- $(top_builddir)/src/main/libextractor.la  
++ libextractor.la
  
---- libextractor-0.5.20/src/plugins/printable/Makefile.am.orig	2007-06-14 00:30:05.000000000 +0200
-+++ libextractor-0.5.20/src/plugins/printable/Makefile.am	2008-03-22 17:46:23.958517722 +0100
-@@ -16,29 +16,41 @@
- 
- CLEANFILES = da.c de.c en.c es.c fi.c fr.c ga.c it.c no.c pt.c sv.c peda.c pede.c peen.c pees.c pefi.c pefr.c pega.c peit.c peno.c pept.c pesv.c $(da_LANG) $(de_LANG) $(es_LANG) $(en_LANG) $(fi_LANG) $(fr_LANG) $(ga_LANG) $(it_LANG) $(no_LANG) $(pt_LANG) $(sv_LANG)
- 
--da.c $(da_LANG): dictionary-builder$(EXEEXT)
-+da.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/da da > da.c
--de.c $(de_LANG): dictionary-builder$(EXEEXT)
-+de.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/de de > de.c
--en.c $(en_LANG): dictionary-builder$(EXEEXT)
-+en.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/en en > en.c
--es.c $(es_LANG): dictionary-builder$(EXEEXT)
-+es.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/es es > es.c
--fi.c $(fi_LANG): dictionary-builder$(EXEEXT)
-+fi.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/fi fi > fi.c
--fr.c $(fr_LANG): dictionary-builder$(EXEEXT)
-+fr.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/fr fr > fr.c
--ga.c $(ga_LANG): dictionary-builder$(EXEEXT)
-+ga.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/ga ga > ga.c
--it.c $(it_LANG): dictionary-builder$(EXEEXT)
-+it.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/it it > it.c
--no.c $(no_LANG): dictionary-builder$(EXEEXT)
-+no.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/no no > no.c
--pt.c $(pt_LANG): dictionary-builder$(EXEEXT)
-+pt.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/pt pt > pt.c
--sv.c $(sv_LANG): dictionary-builder$(EXEEXT)
-+sv.c: dictionary-builder$(EXEEXT)
- 	./dictionary-builder $(srcdir)/sv sv > sv.c
- 
-+$(da_LANG): da.c
-+$(de_LANG): de.c
-+$(en_LANG): en.c
-+$(es_LANG): es.c
-+$(fi_LANG): fi.c
-+$(fr_LANG): fr.c
-+$(ga_LANG): ga.c
-+$(it_LANG): it.c
-+$(no_LANG): no.c
-+$(pt_LANG): pt.c
-+$(sv_LANG): sv.c
-+
- peda.c:
- 	cat peXX.c | sed -e "s/XX/da/" > peda.c
- pede.c:
+ if HAVE_ZZUF
+   fuzz_tests=fuzz_default.sh fuzz_thumbnail.sh
