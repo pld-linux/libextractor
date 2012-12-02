@@ -1,14 +1,14 @@
---- libextractor-0.5.19a/doc/extractor.texi.orig	2007-06-09 11:03:57.000000000 +0200
-+++ libextractor-0.5.19a/doc/extractor.texi	2008-01-22 22:34:27.485958453 +0100
-@@ -24,9 +24,9 @@
+--- libextractor-1.0.1/doc/libextractor.texi.orig	2012-12-01 16:29:41.397812834 +0100
++++ libextractor-1.0.1/doc/libextractor.texi	2012-12-01 16:30:02.851145721 +0100
+@@ -30,9 +30,9 @@
  @end quotation
  @end copying
  
--@dircategory GNU Libraries
+-@dircategory Software libraries
 +@dircategory Libraries:
  @direntry
--* libextractor: (extractor).  Meta data extraction library.
-+* libextractor: (extractor).		Meta data extraction library
+-* Libextractor: (libextractor).    Metadata extraction library.
++* Libextractor: (libextractor).		Metadata extraction library
  @end direntry
  
  

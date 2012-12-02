@@ -1,46 +1,62 @@
+# TODO: libsmf (for midi), zzuf (for tests)
 #
 # Conditional build:
-%bcond_without	qt		# don't build Qt-based thumbnail plugin
-%bcond_without	static_libs	# don't build static library
+%bcond_without	static_libs	# static library
+%bcond_with	tests		# perform tests [some problems with rpm extractor?]
+%bcond_without	gstreamer	# GStreamer plugin
+%bcond_without	mp4v2		# MP4v2 plugin
+%bcond_without	tidy		# HTML plugin (based on tidy library)
 #
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	0.6.2
-Release:	3
-License:	GPL v2+
+Version:	1.0.1
+Release:	1
+License:	GPL v3+
 Group:		Libraries
-Source0:	ftp://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
-# Source0-md5:	4b2af1167061430d58a101d5dfc6b4c7
-Patch0:		%{name}-64bit.patch
-Patch1:		%{name}-pmake.patch
-Patch2:		%{name}-info.patch
-Patch5:		%{name}-rpm5.patch
+Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
+# Source0-md5:	593c40670fd7fc8c3ae7adc3df557f64
+Patch0:		%{name}-info.patch
+Patch1:		%{name}-rpm5.patch
+Patch2:		%{name}-sh.patch
+Patch3:		%{name}-pl.po.patch
 URL:		http://gnunet.org/libextractor/
-%if %{with qt}
-BuildRequires:	QtSvg-devel >= 4.0.1
-%endif
 BuildRequires:	autoconf >= 2.61
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	bzip2-devel
-BuildRequires:	gettext-devel >= 0.14.5
+BuildRequires:	exiv2-devel
+BuildRequires:	gettext-devel >= 0.16.1
+# libavformat libavcodec libavutil libswscale
+BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-devel
+BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 2.0.0
-BuildRequires:	gtk+2-devel >= 2:2.6.0
+%if %{with gstreamer}
+BuildRequires:	gstreamer-devel >= 0.11.93
+BuildRequires:	gstreamer-plugins-base >= 0.11.93
+%endif
+BuildRequires:	gtk+3-devel >= 3.0.0
+BuildRequires:	libarchive-devel
 BuildRequires:	libgsf-devel
-BuildRequires:	libltdl-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libltdl-devel >= 2:2
+BuildRequires:	libmagic-devel
+BuildRequires:	libmpeg2-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 2:1.5
+BuildRequires:	libtiff-devel
+BuildRequires:	libtool >= 2:2
 BuildRequires:	libvorbis-devel
-BuildRequires:	mpeg2dec-devel
-BuildRequires:	pkgconfig
-BuildRequires:	rpm-devel
+%{?with_mp4v2:BuildRequires:	mp4v2-devel}
+BuildRequires:	pkgconfig >= 1:0.7
+# rpm5 patch supports rpm5.org's rpm 4.5.x and 5.x
+BuildRequires:	rpm-devel >= 4.5
+BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
+%{?with_tidy:BuildRequires:	tidy-devel}
 BuildRequires:	zlib-devel
 Obsoletes:	libextractor-printable
+Obsoletes:	libextractor-thumbnail-qt
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_noautoreqfiles		%{_libdir}/%{name}/libextractor_.*\\.la
 
 %description
 libextractor is a simple library for meta-data extraction.
@@ -84,32 +100,32 @@ używane w podobny sposób, co "file". "file" zna więcej typów danych,
 informacji na temat obsługiwanych formatów (HTML, JPEG, Ogg, MP3, PNG,
 GIF, RPM, RA, RM, PS, PDF, ZIP, QT, ASF).
 
-%package thumbnail
+%package thumbnail-ffmpeg
+Summary:	FFmpeg Thumbnail plugin for libextractor
+Summary(pl.UTF-8):	Wtyczka obsługująca miniaturki obrazów poprzez FFmpeg dla biblioteki libextractor
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description thumbnail-ffmpeg
+libextractor plugin that supports thumbnails through FFmpeg.
+
+%description thumbnail-ffmpeg -l pl.UTF-8
+Wtyczka biblioteki libextractor obsługująca miniaturki obrazów poprzez
+FFmpeg.
+
+%package thumbnail-gtk
 Summary:	GTK+ Thumbnail plugin for libextractor
 Summary(pl.UTF-8):	Wtyczka obsługująca miniaturki obrazów poprzez GTK+ dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gtk+2 >= 2:2.6.0
+Obsoletes:	libextractor-thumbnail < 1.0.1
 
-%description thumbnail
+%description thumbnail-gtk
 libextractor plugin that supports thumbnails through GTK+.
 
-%description thumbnail -l pl.UTF-8
+%description thumbnail-gtk -l pl.UTF-8
 Wtyczka biblioteki libextractor obsługująca miniaturki obrazów poprzez
 GTK+.
-
-%package thumbnail-qt
-Summary:	Qt Thumbnail plugin for libextractor
-Summary(pl.UTF-8):	Wtyczka obsługujące miniaturki obrazów poprzez Qt dla biblioteki libextractor
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description thumbnail-qt
-libextractor plugin that supports thumbnails through Qt.
-
-%description thumbnail-qt -l pl.UTF-8
-Wtyczka biblioteki libextractor obsługująca miniaturki obrazów poprzez
-Qt.
 
 %package devel
 Summary:	Development files for libextractor
@@ -117,8 +133,8 @@ Summary(pl.UTF-8):	Pliki nagłówkowe libextractor
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	bzip2-devel
-Requires:	libgsf-devel
 Requires:	libltdl-devel
+Requires:	zlib-devel
 
 %description devel
 This package contains files to develop with libextractor, that is
@@ -145,7 +161,10 @@ Statyczna wersja bibliotek libextractor.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch5 -p1
+%patch3 -p1
+
+%{__rm} po/stamp-po
+%{__sed} -i -e 's,tidy/\(tidy\|buffio\)\.h,\1.h,' configure.ac src/plugins/html_extractor.c
 
 %build
 %{__gettextize}
@@ -154,12 +173,15 @@ Statyczna wersja bibliotek libextractor.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%{?with_qt:CPPFLAGS="-I/usr/include/qt4 -I/usr/include/qt4/Qt"}
 %configure \
+	%{!?with_tests:--disable-testruns} \
+	--enable-experimental \
 	%{?with_static_libs:--enable-static} \
-	%{?with_qt:--with-qt}
+	%{!?with_gstreamer:--without-gstreamer}
 
 %{__make}
+
+%{?with_tests:%{__make} check}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -167,8 +189,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# lt_dlopen is used, but .la files are not required now
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/libextractor_*.la
+%if %{with static_libs}
 # useless
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/libextractor_*.a
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/libextractor_*.a
+%endif
 
 %find_lang %{name}
 
@@ -189,96 +215,64 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/extract
 %attr(755,root,root) %{_libdir}/libextractor.so.*.*.*
-%attr(755,root,root) %{_libdir}/libextractor_common.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libextractor.so.3
-%attr(755,root,root) %ghost %{_libdir}/libextractor_common.so.0
-# plugins are lt_dlopened without extension, so *.la are needed
+%attr(755,root,root) %{_libdir}/libextractor_common.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libextractor_common.so.1
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_applefile.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_asf.so
+# R: libarchive
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_archive.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_deb.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_dvi.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_elf.so
+# R: exiv2
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_exiv2.so
+# R: flac
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_flac.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_flv.so
+# R: giflib
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_gif.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_html.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_id3.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v2.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v23.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_id3v24.so
+# R: gstreamer gstreamer-plugins-base
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_gstreamer.so
+# R: libmagic tidy
+%{?with_tidy:%attr(755,root,root) %{_libdir}/%{name}/libextractor_html.so}
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_it.so
+# R: libjepg
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_jpeg.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_man.so
+# R: libsmf
+#%attr(755,root,root) %{_libdir}/%{name}/libextractor_midi.so
+# R: libmagic
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_mime.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_mp3.so
+# R: mp4v2
+%{?with_mp4v2:%attr(755,root,root) %{_libdir}/%{name}/libextractor_mp4.so}
+# R: libmpeg2
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_mpeg.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_nsf.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_nsfe.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_odf.so
+# R: libvorbis
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ogg.so
+# R: libgsf
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ole2.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_png.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ps.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_qt.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_real.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_riff.so
+# R: rpm-lib
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_rpm.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_s3m.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_sid.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_tar.so
+# R: libtiff
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_tiff.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_wav.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_xm.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_zip.so
-%{_libdir}/%{name}/libextractor_applefile.la
-%{_libdir}/%{name}/libextractor_asf.la
-%{_libdir}/%{name}/libextractor_deb.la
-%{_libdir}/%{name}/libextractor_dvi.la
-%{_libdir}/%{name}/libextractor_elf.la
-%{_libdir}/%{name}/libextractor_flac.la
-%{_libdir}/%{name}/libextractor_flv.la
-%{_libdir}/%{name}/libextractor_gif.la
-%{_libdir}/%{name}/libextractor_html.la
-%{_libdir}/%{name}/libextractor_id3.la
-%{_libdir}/%{name}/libextractor_id3v2.la
-%{_libdir}/%{name}/libextractor_id3v23.la
-%{_libdir}/%{name}/libextractor_id3v24.la
-%{_libdir}/%{name}/libextractor_it.la
-%{_libdir}/%{name}/libextractor_jpeg.la
-%{_libdir}/%{name}/libextractor_man.la
-%{_libdir}/%{name}/libextractor_mime.la
-%{_libdir}/%{name}/libextractor_mp3.la
-%{_libdir}/%{name}/libextractor_mpeg.la
-%{_libdir}/%{name}/libextractor_nsf.la
-%{_libdir}/%{name}/libextractor_nsfe.la
-%{_libdir}/%{name}/libextractor_odf.la
-%{_libdir}/%{name}/libextractor_ogg.la
-%{_libdir}/%{name}/libextractor_ole2.la
-%{_libdir}/%{name}/libextractor_png.la
-%{_libdir}/%{name}/libextractor_ps.la
-%{_libdir}/%{name}/libextractor_qt.la
-%{_libdir}/%{name}/libextractor_real.la
-%{_libdir}/%{name}/libextractor_riff.la
-%{_libdir}/%{name}/libextractor_rpm.la
-%{_libdir}/%{name}/libextractor_s3m.la
-%{_libdir}/%{name}/libextractor_sid.la
-%{_libdir}/%{name}/libextractor_tar.la
-%{_libdir}/%{name}/libextractor_tiff.la
-%{_libdir}/%{name}/libextractor_wav.la
-%{_libdir}/%{name}/libextractor_xm.la
-%{_libdir}/%{name}/libextractor_zip.la
 %{_mandir}/man1/extract.1*
 
-%files thumbnail
+%files thumbnail-ffmpeg
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnailffmpeg.so
+
+%files thumbnail-gtk
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnailgtk.so
-%{_libdir}/%{name}/libextractor_thumbnailgtk.la
-
-%files thumbnail-qt
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnailqt.so
-%{_libdir}/%{name}/libextractor_thumbnailqt.la
 
 %files devel
 %defattr(644,root,root,755)
@@ -289,7 +283,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/extractor.h
 %{_pkgconfigdir}/libextractor.pc
 %{_mandir}/man3/libextractor.3*
-%{_infodir}/extractor.info*
+%{_infodir}/libextractor.info*
 
 %if %{with static_libs}
 %files static
