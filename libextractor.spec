@@ -1,4 +1,4 @@
-# TODO: libsmf (for midi), zzuf (for tests)
+# TODO: zzuf (for tests)
 #
 # Conditional build:
 %bcond_without	static_libs	# static library
@@ -42,6 +42,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libltdl-devel >= 2:2
 BuildRequires:	libmagic-devel
 BuildRequires:	libmpeg2-devel
+BuildRequires:	libsmf-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:2
@@ -238,7 +239,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_jpeg.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_man.so
 # R: libsmf
-#%attr(755,root,root) %{_libdir}/%{name}/libextractor_midi.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_midi.so
 # R: libmagic
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_mime.so
 # R: mp4v2
