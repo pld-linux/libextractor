@@ -47,7 +47,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:2
 BuildRequires:	libvorbis-devel
-%{?with_mp4v2:BuildRequires:	mp4v2-devel}
+%{?with_mp4v2:BuildRequires:	mp4v2-devel >= 2.0.0}
 BuildRequires:	pkgconfig >= 1:0.7
 # rpm5 patch supports rpm5.org's rpm 4.5.x and 5.x
 BuildRequires:	rpm-devel >= 4.5
