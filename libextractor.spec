@@ -10,16 +10,14 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	1.0.1
-Release:	2
+Version:	1.1
+Release:	1
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
-# Source0-md5:	593c40670fd7fc8c3ae7adc3df557f64
+# Source0-md5:	4a1496af12bf545582c0e9444429220d
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
-Patch2:		%{name}-sh.patch
-Patch3:		%{name}-pl.po.patch
 URL:		http://gnunet.org/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
@@ -161,8 +159,6 @@ Statyczna wersja bibliotek libextractor.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %{__rm} po/stamp-po
 %{__sed} -i -e 's,tidy/\(tidy\|buffio\)\.h,\1.h,' configure.ac src/plugins/html_extractor.c
