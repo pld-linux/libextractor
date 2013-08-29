@@ -18,6 +18,7 @@ Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
 # Source0-md5:	4a1496af12bf545582c0e9444429220d
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
+Patch2:		%{name}-ffmpeg2.patch
 URL:		http://gnunet.org/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
@@ -159,6 +160,7 @@ Statyczna wersja bibliotek libextractor.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p0
 
 %{__rm} po/stamp-po
 %{__sed} -i -e 's,tidy/\(tidy\|buffio\)\.h,\1.h,' configure.ac src/plugins/html_extractor.c
