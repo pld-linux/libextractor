@@ -1,4 +1,3 @@
-# TODO: zzuf (for tests)
 #
 # Conditional build:
 %bcond_without	static_libs	# static library
@@ -54,6 +53,7 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 %{?with_tidy:BuildRequires:	tidy-devel}
 BuildRequires:	zlib-devel
+%{?with_tests:BuildRequires:	zzuf}
 Obsoletes:	libextractor-printable
 Obsoletes:	libextractor-thumbnail-qt
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
