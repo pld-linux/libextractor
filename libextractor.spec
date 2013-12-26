@@ -9,15 +9,15 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	1.2
+Version:	1.3
 Release:	1
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
-# Source0-md5:	d88c1b7fab9c59486badaa38ca68a600
+# Source0-md5:	35b8913dbebafe583a2781bf71509c48
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
-Patch2:		%{name}-ffmpeg2.patch
+Patch2:		%{name}-pl.po-update.patch
 URL:		http://www.gnu.org/software/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
@@ -101,17 +101,18 @@ informacji na temat obsługiwanych formatów (HTML, JPEG, Ogg, MP3, PNG,
 GIF, RPM, RA, RM, PS, PDF, ZIP, QT, ASF).
 
 %package thumbnail-ffmpeg
-Summary:	FFmpeg Thumbnail plugin for libextractor
-Summary(pl.UTF-8):	Wtyczka obsługująca miniaturki obrazów poprzez FFmpeg dla biblioteki libextractor
+Summary:	FFmpeg Thumbnail and audio preview plugins for libextractor
+Summary(pl.UTF-8):	Wtyczki obsługująca miniaturki obrazów oraz podgląd dźwięku poprzez FFmpeg dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description thumbnail-ffmpeg
-libextractor plugin that supports thumbnails through FFmpeg.
+libextractor plugins that supports thumbnails and audio preview
+through FFmpeg.
 
 %description thumbnail-ffmpeg -l pl.UTF-8
-Wtyczka biblioteki libextractor obsługująca miniaturki obrazów poprzez
-FFmpeg.
+Wtyczki biblioteki libextractor obsługujące miniaturki obrazów oraz
+podgląd dźwięku poprzez FFmpeg.
 
 %package thumbnail-gtk
 Summary:	GTK+ Thumbnail plugin for libextractor
@@ -267,6 +268,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files thumbnail-ffmpeg
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_previewopus.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnailffmpeg.so
 
 %files thumbnail-gtk

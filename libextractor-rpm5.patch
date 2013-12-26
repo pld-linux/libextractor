@@ -31,8 +31,8 @@ index 192a838..4ddd127 100644
  
  
  # install plugins under:
---- libextractor-1.0.1/src/plugins/rpm_extractor.c.orig	2012-08-06 13:02:13.000000000 +0200
-+++ libextractor-1.0.1/src/plugins/rpm_extractor.c	2012-12-01 21:35:01.967430974 +0100
+--- libextractor-1.3/src/plugins/rpm_extractor.c.orig	2013-11-28 22:16:45.000000000 +0100
++++ libextractor-1.3/src/plugins/rpm_extractor.c	2013-12-26 20:29:36.083607762 +0100
 @@ -25,9 +25,10 @@
  #include "platform.h"
  #include "extractor.h"
@@ -44,29 +44,28 @@ index 192a838..4ddd127 100644
 +#include <rpmio.h>
 +#include <rpmts.h>
 +#include <rpmlog.h>
- #include <pthread.h>
- #include <sys/types.h>
- #include <signal.h>
-@@ -124,6 +125,7 @@ pipe_feeder (void * args)
+ #if SOMEBSD
+ #include <pthread_np.h>
+ #else
+@@ -128,6 +129,7 @@ pipe_feeder (void * args)
   * LOG callback called by librpm.  Does nothing, we
   * just need this to override the default behavior.
   */
 +#ifdef RPMLOG_DEFAULT
- static int 
+ static int
  discard_log_callback (rpmlogRec rec,
- 		      void *ctx) 
-@@ -131,7 +133,9 @@ discard_log_callback (rpmlogRec rec,
+ 		      void *ctx)
+@@ -135,6 +137,9 @@ discard_log_callback (rpmlogRec rec,
    /* do nothing! */
    return 0;
  }
-- 
 +#else
 +static void discard_log_callback() { }
 +#endif
  
+ 
  /**
-  * Mapping from RPM tags to LE types.
-@@ -236,6 +240,12 @@ static struct Matches tests[] = {
+@@ -240,6 +245,12 @@ static struct Matches tests[] = {
    {0, 0}
  };
  
@@ -78,8 +77,8 @@ index 192a838..4ddd127 100644
 +#endif
  
  /**
-  * Main entry method for the 'application/x-rpm' extraction plugin. 
-@@ -251,7 +261,7 @@ EXTRACTOR_rpm_extract_method (struct EXT
+  * Main entry method for the 'application/x-rpm' extraction plugin.
+@@ -255,7 +266,7 @@ EXTRACTOR_rpm_extract_method (struct EXT
    const char *str;
    Header hdr;
    HeaderIterator hi;
@@ -88,7 +87,7 @@ index 192a838..4ddd127 100644
    int i;
    FD_t fdi;
    rpmRC rc;
-@@ -282,7 +292,11 @@ EXTRACTOR_rpm_extract_method (struct EXT
+@@ -286,7 +297,11 @@ EXTRACTOR_rpm_extract_method (struct EXT
        CLOSE (parg.pi[1]);
        return;
      }
@@ -100,7 +99,7 @@ index 192a838..4ddd127 100644
    fdi = fdDup (parg.pi[0]);
    ts = rpmtsCreate();
    rc = rpmReadPackageFile (ts, fdi, "GNU libextractor", &hdr);
-@@ -310,19 +324,38 @@ EXTRACTOR_rpm_extract_method (struct EXT
+@@ -314,19 +329,38 @@ EXTRACTOR_rpm_extract_method (struct EXT
        goto END;
      }
    pthread_mutex_unlock (&parg.lock);
@@ -139,12 +138,12 @@ index 192a838..4ddd127 100644
  	  case RPM_STRING_ARRAY_TYPE:
  	  case RPM_I18NSTRING_TYPE:
 -	  case RPM_STRING_TYPE:
--	    while (NULL != (str = rpmtdNextString (p))) 
+-	    while (NULL != (str = rpmtdNextString (p)))
 +	    for(p->ix = 0; p->ix < p->c; p->ix++) 
  	      {
  		pthread_mutex_lock (&parg.lock);
- 		if (0 != ec->proc (ec->cls, 
-@@ -330,8 +363,8 @@ EXTRACTOR_rpm_extract_method (struct EXT
+ 		if (0 != ec->proc (ec->cls,
+@@ -334,8 +368,8 @@ EXTRACTOR_rpm_extract_method (struct EXT
  				   tests[i].type,
  				   EXTRACTOR_METAFORMAT_UTF8,
  				   "text/plain",
@@ -152,10 +151,10 @@ index 192a838..4ddd127 100644
 -				   strlen (str) + 1))
 +				   p->p.argv[p->ix],
 +				   strlen (p->p.argv[p->ix]) + 1))
- 		  
- 		  {		 
+ 
+ 		  {
  		    pthread_mutex_unlock (&parg.lock);
-@@ -340,12 +373,12 @@ EXTRACTOR_rpm_extract_method (struct EXT
+@@ -344,12 +378,12 @@ EXTRACTOR_rpm_extract_method (struct EXT
  		pthread_mutex_unlock (&parg.lock);
  	      }
  	    break;
@@ -170,20 +169,20 @@ index 192a838..4ddd127 100644
  		  time_t tp = (time_t) *v;
  
  		  ctime_r (&tp, tmp);
-@@ -367,7 +400,7 @@ EXTRACTOR_rpm_extract_method (struct EXT
+@@ -371,7 +405,7 @@ EXTRACTOR_rpm_extract_method (struct EXT
  	      else
  		{
  		  char tmp[14];
 -		  uint32_t *s = rpmtdNextUint32 (p);
 +		  uint32_t *s = p->p.ui32p;
  
- 		  snprintf (tmp, 
- 			    sizeof (tmp), 
-@@ -394,7 +427,6 @@ EXTRACTOR_rpm_extract_method (struct EXT
- 	  }      
+ 		  snprintf (tmp,
+ 			    sizeof (tmp),
+@@ -398,7 +432,6 @@ EXTRACTOR_rpm_extract_method (struct EXT
+ 	  }
        }
   CLEANUP:
 -  rpmtdFree (p);
    headerFreeIterator (hi);
  
-  END:				
+  END:
