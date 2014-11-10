@@ -10,7 +10,7 @@ Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	1.3
-Release:	5
+Release:	6
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
@@ -18,6 +18,7 @@ Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
 Patch2:		%{name}-pl.po-update.patch
+Patch3:		%{name}-giflib.patch
 URL:		http://www.gnu.org/software/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
@@ -27,7 +28,7 @@ BuildRequires:	gettext-devel >= 0.16.1
 # libavformat libavcodec libavutil libswscale
 BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-devel
-BuildRequires:	giflib-devel
+BuildRequires:	giflib-devel >= 5.1.0
 BuildRequires:	glib2-devel >= 2.0.0
 %if %{with gstreamer}
 BuildRequires:	gstreamer-devel >= 0.11.93
@@ -162,6 +163,7 @@ Statyczna wersja bibliotek libextractor.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %{__rm} po/stamp-po
 %{__sed} -i -e 's,tidy/\(tidy\|buffio\)\.h,\1.h,' configure.ac src/plugins/html_extractor.c
