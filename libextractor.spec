@@ -24,7 +24,7 @@ BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	bzip2-devel
 BuildRequires:	exiv2-devel
-BuildRequires:	gettext-devel >= 0.16.1
+BuildRequires:	gettext-tools >= 0.16.1
 # libavformat libavcodec libavutil libswscale
 BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-devel
