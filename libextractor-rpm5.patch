@@ -34,16 +34,15 @@ index 192a838..4ddd127 100644
  # install plugins under:
 --- libextractor-1.6/src/plugins/rpm_extractor.c.orig	2017-10-15 20:44:15.000000000 +0200
 +++ libextractor-1.6/src/plugins/rpm_extractor.c	2017-12-07 18:29:10.923018408 +0100
-@@ -25,9 +25,11 @@
+@@ -25,9 +25,10 @@
  #include "platform.h"
  #include "extractor.h"
  #include <stdint.h>
 -#include <rpm/rpmlib.h>
 -#include <rpm/rpmts.h>
 -#include <rpm/rpmlog.h>
-+#include <rpmutil.h>
-+#include <rpmcli.h>
 +#include <rpmio.h>
++#include <rpmcli.h>
 +#include <rpmts.h>
 +#include <rpmlog.h>
  #if SOMEBSD
