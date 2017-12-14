@@ -1,28 +1,28 @@
---- libextractor-1.3/po/pl.po.orig	2013-12-22 23:11:22.000000000 +0100
-+++ libextractor-1.3/po/pl.po	2013-12-26 20:33:06.570265595 +0100
+--- libextractor-1.6/po/pl.po.orig	2017-10-15 21:38:52.000000000 +0200
++++ libextractor-1.6/po/pl.po	2017-12-07 18:33:43.479681961 +0100
 @@ -5,10 +5,10 @@
  #
  msgid ""
  msgstr ""
 -"Project-Id-Version: libextractor 1.0.0-pre1\n"
-+"Project-Id-Version: libextractor 1.3\n"
++"Project-Id-Version: libextractor 1.6\n"
  "Report-Msgid-Bugs-To: libextractor@gnu.org\n"
- "POT-Creation-Date: 2013-12-22 23:11+0100\n"
+ "POT-Creation-Date: 2017-10-15 21:38+0200\n"
 -"PO-Revision-Date: 2012-12-01 15:45+0100\n"
-+"PO-Revision-Date: 2013-12-26 20:30+0100\n"
++"PO-Revision-Date: 2017-12-07 15:45+0100\n"
  "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
  "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
  "Language: pl\n"
 @@ -129,9 +129,8 @@
  msgstr "Opcja --help pozwala uzyskać listę opcji.\n"
  
- #: src/main/extract.c:964
+ #: src/main/extract.c:970
 -#, fuzzy
  msgid "% BiBTeX file\n"
 -msgstr "%% plik BiBTeX\n"
 +msgstr "% plik BiBTeX\n"
  
- #: src/main/extract.c:972
+ #: src/main/extract.c:978
  #, c-format
 @@ -1693,7 +1692,6 @@
  msgstr "numer sezonu przestawienia/serialu"
@@ -32,7 +32,7 @@
  msgid "grouping"
  msgstr "grupowanie"
  
-@@ -1854,14 +1852,12 @@
+@@ -1854,32 +1852,29 @@
  msgstr "czas trwania strumienia napisów"
  
  #: src/main/extractor_metatypes.c:551
@@ -47,5 +47,27 @@
 -msgstr "częstotliwość próbkowania ścieżki dźwiękowej"
 +msgstr "podgląd strumienia dźwięku z pliku"
  
- #: src/main/extractor_metatypes.c:554 src/main/extractor_metatypes.c:555
+ #: src/main/extractor_metatypes.c:554
+ msgid "narinfo"
+-msgstr ""
++msgstr "narinfo"
+ 
+ #: src/main/extractor_metatypes.c:555
+ msgid ""
+ "file containing information about contents of a normalized archive (nar)"
+-msgstr ""
++msgstr "plik zawierający informacje o zawartości archiwum znormalizowanego (nar)"
+ 
+ #: src/main/extractor_metatypes.c:557
+-#, fuzzy
+ msgid "nar"
+-msgstr "zarządca"
++msgstr "nar"
+ 
+ #: src/main/extractor_metatypes.c:558
+ msgid "normalized archive"
+-msgstr ""
++msgstr "archiwum znormalizowane"
+ 
+ #: src/main/extractor_metatypes.c:560 src/main/extractor_metatypes.c:561
  msgid "last"

@@ -9,23 +9,21 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	1.3
-Release:	11
+Version:	1.6
+Release:	1
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
-# Source0-md5:	35b8913dbebafe583a2781bf71509c48
+# Source0-md5:	cbadbfa6051ee54837299ee81732a0eb
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
 Patch2:		%{name}-pl.po-update.patch
-Patch3:		%{name}-giflib.patch
-Patch4:		ffmpeg3.patch
-Patch5:		exiv2-types.patch
 URL:		http://www.gnu.org/software/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	bzip2-devel
 BuildRequires:	exiv2-devel
+BuildRequires:	gdk-pixbuf2-devel >= 2.4
 BuildRequires:	gettext-tools >= 0.16.1
 # libavformat libavcodec libavutil libswscale
 BuildRequires:	ffmpeg-devel
@@ -37,6 +35,7 @@ BuildRequires:	gstreamer-devel >= 0.11.93
 BuildRequires:	gstreamer-plugins-base >= 0.11.93
 %endif
 BuildRequires:	gtk+3-devel >= 3.0.0
+BuildRequires:	libapparmor-devel
 BuildRequires:	libarchive-devel
 BuildRequires:	libgsf-devel
 BuildRequires:	libjpeg-devel
@@ -54,7 +53,7 @@ BuildRequires:	pkgconfig >= 1:0.7
 BuildRequires:	rpm-devel >= 4.5
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
-%{?with_tidy:BuildRequires:	tidy-devel}
+%{?with_tidy:BuildRequires:	tidy-devel >= 5}
 BuildRequires:	zlib-devel
 %{?with_tests:BuildRequires:	zzuf}
 Obsoletes:	libextractor-printable
@@ -122,6 +121,7 @@ Summary:	GTK+ Thumbnail plugin for libextractor
 Summary(pl.UTF-8):	Wtyczka obsługująca miniaturki obrazów poprzez GTK+ dla biblioteki libextractor
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	gdk-pixbuf2 >= 2.4
 Obsoletes:	libextractor-thumbnail < 1.0.1
 
 %description thumbnail-gtk
@@ -137,6 +137,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe libextractor
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	bzip2-devel
+Requires:	libapparmor-devel
 Requires:	libltdl-devel
 Requires:	zlib-devel
 
@@ -165,12 +166,8 @@ Statyczna wersja bibliotek libextractor.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %{__rm} po/stamp-po
-%{__sed} -i -e 's,tidy/\(tidy\|buffio\)\.h,\1.h,' configure.ac src/plugins/html_extractor.c
 
 %build
 %{__gettextize}
@@ -258,6 +255,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ogg.so
 # R: libgsf
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ole2.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_pdf.so
+# R: zlib
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_png.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ps.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_riff.so
