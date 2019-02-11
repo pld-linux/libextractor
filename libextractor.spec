@@ -10,7 +10,7 @@ Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	1.8
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
@@ -18,6 +18,7 @@ Source0:	http://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
 Patch2:		%{name}-pl.po-update.patch
+Patch3:		exiv2-0.27.patch
 URL:		http://www.gnu.org/software/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
@@ -166,6 +167,7 @@ Statyczna wersja bibliotek libextractor.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %{__rm} po/stamp-po
 
