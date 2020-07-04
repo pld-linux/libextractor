@@ -32,8 +32,8 @@ index 192a838..4ddd127 100644
  
  
  # install plugins under:
---- libextractor-1.6/src/plugins/rpm_extractor.c.orig	2017-10-15 20:44:15.000000000 +0200
-+++ libextractor-1.6/src/plugins/rpm_extractor.c	2017-12-07 18:29:10.923018408 +0100
+--- libextractor-1.10/src/plugins/rpm_extractor.c.orig	2020-03-03 12:54:56.000000000 +0100
++++ libextractor-1.10/src/plugins/rpm_extractor.c	2020-07-04 18:52:32.521839942 +0200
 @@ -25,9 +25,10 @@
  #include "platform.h"
  #include "extractor.h"
@@ -48,14 +48,14 @@ index 192a838..4ddd127 100644
  #if SOMEBSD
  #include <pthread_np.h>
  #else
-@@ -128,6 +129,7 @@ pipe_feeder (void * args)
+@@ -128,6 +129,7 @@ pipe_feeder (void *args)
   * LOG callback called by librpm.  Does nothing, we
   * just need this to override the default behavior.
   */
 +#ifdef RPMLOG_DEFAULT
  static int
  discard_log_callback (rpmlogRec rec,
- 		      void *ctx)
+                       void *ctx)
 @@ -135,6 +137,9 @@ discard_log_callback (rpmlogRec rec,
    /* do nothing! */
    return 0;
@@ -89,101 +89,96 @@ index 192a838..4ddd127 100644
    FD_t fdi;
    rpmRC rc;
 @@ -286,7 +297,11 @@ EXTRACTOR_rpm_extract_method (struct EXT
-       CLOSE (parg.pi[1]);
-       return;
-     }
+     CLOSE (parg.pi[1]);
+     return;
+   }
 +#ifdef RPMLOG_DEFAULT
    rpmlogSetCallback (&discard_log_callback, NULL);
 +#else
 +  rpmlogSetCallback (&discard_log_callback);
 +#endif
    fdi = fdDup (parg.pi[0]);
-   ts = rpmtsCreate();
+   ts = rpmtsCreate ();
    rc = rpmReadPackageFile (ts, fdi, "GNU libextractor", &hdr);
-@@ -314,19 +329,38 @@ EXTRACTOR_rpm_extract_method (struct EXT
-       goto END;
-     }
+@@ -314,19 +329,35 @@ EXTRACTOR_rpm_extract_method (struct EXT
+     goto END;
+   }
    pthread_mutex_unlock (&parg.lock);
 +#ifdef H_RPMTAG
 +  hi = headerInit (hdr);
-+#else
-   hi = headerInitIterator (hdr);
--  p = rpmtdNew ();
--  while (1 == headerNext (hi, p))
-+#endif
 +  p = (HE_t)memset(alloca(sizeof(*p)), 0, sizeof(*p));
 +  while (1 == headerNext (hi, p, 0))
++#else
+   hi = headerInitIterator (hdr);
+   p = rpmtdNew ();
+   while (1 == headerNext (hi, p))
++#endif
      for (i = 0; 0 != tests[i].rtype; i++)
+     {
+       if (tests[i].rtype != p->tag)
+         continue;
+-      switch (p->type)
++      switch (p->t)
        {
- 	if (tests[i].rtype != p->tag)
- 	  continue;
--	switch (p->type)
-+	switch (p->t)
- 	  {
-+	  case RPM_STRING_TYPE:
-+	    {
-+		pthread_mutex_lock (&parg.lock);
-+		if (0 != ec->proc (ec->cls, 
-+                                "rpm",
-+                                tests[i].type,
-+                                EXTRACTOR_METAFORMAT_UTF8,
-+                                "text/plain",
-+                                p->p.str,
-+                                strlen (p->p.str) +1)) {
-+		  pthread_mutex_unlock (&parg.lock);
-+		  return;
-+		}
-+	        pthread_mutex_unlock (&parg.lock);
-+	    }
-+	    break;
- 	  case RPM_STRING_ARRAY_TYPE:
- 	  case RPM_I18NSTRING_TYPE:
--	  case RPM_STRING_TYPE:
--	    while (NULL != (str = rpmtdNextString (p)))
-+	    for(p->ix = 0; p->ix < p->c; p->ix++) 
- 	      {
- 		pthread_mutex_lock (&parg.lock);
- 		if (0 != ec->proc (ec->cls,
-@@ -334,8 +368,8 @@ EXTRACTOR_rpm_extract_method (struct EXT
- 				   tests[i].type,
- 				   EXTRACTOR_METAFORMAT_UTF8,
- 				   "text/plain",
--				   str,
--				   strlen (str) + 1))
-+				   p->p.argv[p->ix],
-+				   strlen (p->p.argv[p->ix]) + 1))
++      case RPM_STRING_TYPE:
++        {
++          pthread_mutex_lock (&parg.lock);
++          if (0 != ec->proc (ec->cls, "rpm", tests[i].type, EXTRACTOR_METAFORMAT_UTF8,
++                             "text/plain", p->p.str, strlen (p->p.str) +1)) {
++            pthread_mutex_unlock (&parg.lock);
++            return;
++          }
++          pthread_mutex_unlock (&parg.lock);
++        }
++        break;
+       case RPM_STRING_ARRAY_TYPE:
+       case RPM_I18NSTRING_TYPE:
+-      case RPM_STRING_TYPE:
+-        while (NULL != (str = rpmtdNextString (p)))
++        for(p->ix = 0; p->ix < p->c; p->ix++) 
+         {
+           pthread_mutex_lock (&parg.lock);
+           if (0 != ec->proc (ec->cls,
+@@ -334,8 +365,8 @@ EXTRACTOR_rpm_extract_method (struct EXT
+                              tests[i].type,
+                              EXTRACTOR_METAFORMAT_UTF8,
+                              "text/plain",
+-                             str,
+-                             strlen (str) + 1))
++                             p->p.argv[p->ix],
++                             strlen (p->p.argv[p->ix]) + 1))
  
- 		  {
- 		    pthread_mutex_unlock (&parg.lock);
-@@ -344,12 +378,12 @@ EXTRACTOR_rpm_extract_method (struct EXT
- 		pthread_mutex_unlock (&parg.lock);
- 	      }
- 	    break;
--	  case RPM_INT32_TYPE:
-+	  case RPM_UINT32_TYPE:
- 	    {
- 	      if (p->tag == RPMTAG_BUILDTIME)
- 		{
- 		  char tmp[80];
--		  uint32_t *v = rpmtdNextUint32 (p);
-+		  uint32_t *v = p->p.ui32p;
- 		  time_t tp = (time_t) *v;
+           {
+             pthread_mutex_unlock (&parg.lock);
+@@ -344,12 +375,12 @@ EXTRACTOR_rpm_extract_method (struct EXT
+           pthread_mutex_unlock (&parg.lock);
+         }
+         break;
+-      case RPM_INT32_TYPE:
++      case RPM_UINT32_TYPE:
+         {
+           if (p->tag == RPMTAG_BUILDTIME)
+           {
+             char tmp[80];
+-            uint32_t *v = rpmtdNextUint32 (p);
++            uint32_t *v = p->p.ui32p;
+             time_t tp = (time_t) *v;
  
-                   if (NULL == ctime_r (&tp, tmp))
-@@ -374,7 +408,7 @@ EXTRACTOR_rpm_extract_method (struct EXT
- 	      else
- 		{
- 		  char tmp[14];
--		  uint32_t *s = rpmtdNextUint32 (p);
-+		  uint32_t *s = p->p.ui32p;
+             if (NULL == ctime_r (&tp, tmp))
+@@ -374,7 +405,7 @@ EXTRACTOR_rpm_extract_method (struct EXT
+           else
+           {
+             char tmp[14];
+-            uint32_t *s = rpmtdNextUint32 (p);
++            uint32_t *s = p->p.ui32p;
  
- 		  snprintf (tmp,
- 			    sizeof (tmp),
-@@ -401,7 +435,6 @@ EXTRACTOR_rpm_extract_method (struct EXT
- 	  }
+             snprintf (tmp,
+                       sizeof (tmp),
+@@ -401,7 +432,6 @@ EXTRACTOR_rpm_extract_method (struct EXT
        }
-  CLEANUP:
+     }
+ CLEANUP:
 -  rpmtdFree (p);
    headerFreeIterator (hi);
  
-  END:
+ END:
