@@ -4,13 +4,14 @@
 %bcond_with	tests		# perform tests [some problems with rpm extractor?]
 %bcond_without	gstreamer	# GStreamer plugin
 %bcond_without	mp4v2		# MP4v2 plugin
+%bcond_with	rpm5		# build with rpm5
 %bcond_without	tidy		# HTML plugin (based on tidy library)
 #
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	1.10
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Libraries
 Source0:	https://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
@@ -49,7 +50,6 @@ BuildRequires:	libtool >= 2:2
 BuildRequires:	libvorbis-devel
 %{?with_mp4v2:BuildRequires:	mp4v2-devel >= 2.0.0}
 BuildRequires:	pkgconfig >= 1:0.7
-# rpm5 patch supports rpm5.org's rpm 4.5.x and 5.x
 BuildRequires:	rpm-devel >= 4.5
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
@@ -164,7 +164,7 @@ Statyczna wersja bibliotek libextractor.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+%{?with_rpm5:%patch1 -p1}
 %patch2 -p1
 
 %{__rm} po/stamp-po
