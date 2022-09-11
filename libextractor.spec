@@ -11,7 +11,7 @@ Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	1.10
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Libraries
 Source0:	https://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
