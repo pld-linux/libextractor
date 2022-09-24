@@ -10,15 +10,14 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	1.10
-Release:	3
+Version:	1.11
+Release:	1
 License:	GPL v3+
 Group:		Libraries
 Source0:	https://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
-# Source0-md5:	e937a97e0d34a7344af0e3a63e421e4b
+# Source0-md5:	934a53749d263c1f5b8a6aae5741ea3f
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
-Patch2:		%{name}-soname.patch
 URL:		http://www.gnu.org/software/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
@@ -56,8 +55,8 @@ BuildRequires:	texinfo
 %{?with_tidy:BuildRequires:	tidy-devel >= 5}
 BuildRequires:	zlib-devel
 %{?with_tests:BuildRequires:	zzuf}
-Obsoletes:	libextractor-printable
-Obsoletes:	libextractor-thumbnail-qt
+Obsoletes:	libextractor-printable < 0.6
+Obsoletes:	libextractor-thumbnail-qt < 1.0.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -165,7 +164,6 @@ Statyczna wersja bibliotek libextractor.
 %setup -q
 %patch0 -p1
 %{?with_rpm5:%patch1 -p1}
-%patch2 -p1
 
 %{__rm} po/stamp-po
 
