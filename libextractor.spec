@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	static_libs	# static library
-%bcond_with	tests		# perform tests [some problems with rpm extractor?]
+%bcond_without	tests		# perform tests [some problems with rpm5]
 %bcond_without	gstreamer	# GStreamer plugin
 %bcond_without	mp4v2		# MP4v2 plugin
 %bcond_with	rpm5		# build with rpm5
@@ -11,13 +11,14 @@ Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	1.11
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Libraries
 Source0:	https://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
 # Source0-md5:	934a53749d263c1f5b8a6aae5741ea3f
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
+Patch2:		%{name}-exiv2-0.28.patch
 URL:		http://www.gnu.org/software/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
@@ -164,6 +165,7 @@ Statyczna wersja bibliotek libextractor.
 %setup -q
 %patch0 -p1
 %{?with_rpm5:%patch1 -p1}
+%patch2 -p1
 
 %{__rm} po/stamp-po
 
