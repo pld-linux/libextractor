@@ -11,14 +11,15 @@ Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	1.11
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Libraries
 Source0:	https://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
 # Source0-md5:	934a53749d263c1f5b8a6aae5741ea3f
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
-Patch2:		%{name}-exiv2-0.28.patch
+Patch2:		libextractor-exiv2-0.28.patch
+Patch3:		no-ffmpeg.patch
 URL:		http://www.gnu.org/software/libextractor/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
@@ -26,8 +27,6 @@ BuildRequires:	bzip2-devel
 BuildRequires:	exiv2-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.4
 BuildRequires:	gettext-tools >= 0.16.1
-# libavformat libavcodec libavutil libswscale
-BuildRequires:	ffmpeg-devel
 BuildRequires:	flac-devel
 BuildRequires:	giflib-devel >= 5.1.0
 BuildRequires:	glib2-devel >= 2.0.0
@@ -58,6 +57,7 @@ BuildRequires:	zlib-devel
 %{?with_tests:BuildRequires:	zzuf}
 Obsoletes:	libextractor-printable < 0.6
 Obsoletes:	libextractor-thumbnail-qt < 1.0.1
+Obsoletes:	thumbnail-ffmpeg < 1.11-3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -101,20 +101,6 @@ używane w podobny sposób, co "file". "file" zna więcej typów danych,
 "extract" natomiast dostarcza bardziej precyzyjnych i szczegółowych
 informacji na temat obsługiwanych formatów (HTML, JPEG, Ogg, MP3, PNG,
 GIF, RPM, RA, RM, PS, PDF, ZIP, QT, ASF).
-
-%package thumbnail-ffmpeg
-Summary:	FFmpeg Thumbnail and audio preview plugins for libextractor
-Summary(pl.UTF-8):	Wtyczki obsługująca miniaturki obrazów oraz podgląd dźwięku poprzez FFmpeg dla biblioteki libextractor
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description thumbnail-ffmpeg
-libextractor plugins that supports thumbnails and audio preview
-through FFmpeg.
-
-%description thumbnail-ffmpeg -l pl.UTF-8
-Wtyczki biblioteki libextractor obsługujące miniaturki obrazów oraz
-podgląd dźwięku poprzez FFmpeg.
 
 %package thumbnail-gtk
 Summary:	GTK+ Thumbnail plugin for libextractor
@@ -166,6 +152,7 @@ Statyczna wersja bibliotek libextractor.
 %patch0 -p1
 %{?with_rpm5:%patch1 -p1}
 %patch2 -p1
+%patch3 -p1
 
 %{__rm} po/stamp-po
 
@@ -270,11 +257,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_xm.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_zip.so
 %{_mandir}/man1/extract.1*
-
-%files thumbnail-ffmpeg
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_previewopus.so
-%attr(755,root,root) %{_libdir}/%{name}/libextractor_thumbnailffmpeg.so
 
 %files thumbnail-gtk
 %defattr(644,root,root,755)
