@@ -10,23 +10,22 @@
 Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
-Version:	1.11
-Release:	3
+Version:	1.13
+Release:	1
 License:	GPL v3+
 Group:		Libraries
 Source0:	https://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
-# Source0-md5:	934a53749d263c1f5b8a6aae5741ea3f
+# Source0-md5:	7f28aeb17fb360a78a71069375934e6f
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-rpm5.patch
-Patch2:		libextractor-exiv2-0.28.patch
-Patch3:		no-ffmpeg.patch
+Patch2:		%{name}-exiv2.patch
 URL:		http://www.gnu.org/software/libextractor/
-BuildRequires:	autoconf >= 2.61
+BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	bzip2-devel
 BuildRequires:	exiv2-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.4
-BuildRequires:	gettext-tools >= 0.16.1
+BuildRequires:	gettext-tools >= 0.21
 BuildRequires:	flac-devel
 BuildRequires:	giflib-devel >= 5.1.0
 BuildRequires:	glib2-devel >= 2.0.0
@@ -152,7 +151,6 @@ Statyczna wersja bibliotek libextractor.
 %patch0 -p1
 %{?with_rpm5:%patch1 -p1}
 %patch2 -p1
-%patch3 -p1
 
 %{__rm} po/stamp-po
 
@@ -213,6 +211,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_archive.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_deb.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_dvi.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_elf.so
 # R: exiv2
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_exiv2.so
 # R: flac
@@ -246,6 +245,7 @@ rm -rf $RPM_BUILD_ROOT
 # R: zlib
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_png.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_ps.so
+%attr(755,root,root) %{_libdir}/%{name}/libextractor_real.so
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_riff.so
 # R: rpm-lib
 %attr(755,root,root) %{_libdir}/%{name}/libextractor_rpm.so

@@ -1,0 +1,24 @@
+--- libextractor-1.13/src/plugins/test_exiv2.c.orig	2021-04-08 13:30:42.000000000 +0200
++++ libextractor-1.13/src/plugins/test_exiv2.c	2024-01-13 15:43:17.804290064 +0100
+@@ -49,8 +49,8 @@ main (int argc, char *argv[])
+       EXTRACTOR_METATYPE_GPS_LATITUDE,
+       EXTRACTOR_METAFORMAT_UTF8,
+       "text/plain",
+-      "28deg 8' (18|17.585)\" ?",
+-      strlen ("28deg 8' (18|17.585)\" ?") + 1,
++      "28 ?deg 8' (18|17.58|17.585)\" ?",
++      strlen ("28 ?deg 8' (18|17.58|17.585)\" ?") + 1,
+       0,
+       .regex = 1
+     },
+@@ -66,8 +66,8 @@ main (int argc, char *argv[])
+       EXTRACTOR_METATYPE_GPS_LONGITUDE,
+       EXTRACTOR_METAFORMAT_UTF8,
+       "text/plain",
+-      "14deg 14' (22|21.713)\" ?",
+-      strlen ("14deg 14' (22|21.713)\" ?"),
++      "14 ?deg 14' (22|21.71|21.713)\" ?",
++      strlen ("14 ?deg 14' (22|21.71|21.713)\" ?"),
+       0,
+       .regex = 1
+     },
