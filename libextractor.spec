@@ -11,7 +11,7 @@ Summary:	Meta-data extraction library
 Summary(pl.UTF-8):	Biblioteka do ekstrakcji metadanych
 Name:		libextractor
 Version:	1.13
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Libraries
 Source0:	https://ftp.gnu.org/gnu/libextractor/%{name}-%{version}.tar.gz
@@ -24,9 +24,9 @@ BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	bzip2-devel
 BuildRequires:	exiv2-devel
+BuildRequires:	flac-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.4
 BuildRequires:	gettext-tools >= 0.21
-BuildRequires:	flac-devel
 BuildRequires:	giflib-devel >= 5.1.0
 BuildRequires:	glib2-devel >= 2.0.0
 %if %{with gstreamer}
@@ -91,8 +91,8 @@ formatach HTML, JPEG, Ogg, MP3, PNG, RPM, GIF, ZIP, QT, ASF, Real
 Audio i Video, PostScript oraz PDF. Ponadto rozpoznaje dużo więcej
 typów MIME w sposób podobny do dobrze znanego narzędzia "file".
 
-Każda informacja pobrana z pliku należy do jednej z około 40
-kategorii (np. tytuł, autor, opis, typ MIME).
+Każda informacja pobrana z pliku należy do jednej z około 40 kategorii
+(np. tytuł, autor, opis, typ MIME).
 
 Ta paczka zawiera też narzędzie "extract", które pozwala skorzystać z
 usług libextractor bezpośrednio z linii poleceń. "extract" może być
@@ -148,9 +148,9 @@ Statyczna wersja bibliotek libextractor.
 
 %prep
 %setup -q
-%patch0 -p1
-%{?with_rpm5:%patch1 -p1}
-%patch2 -p1
+%patch -P 0 -p1
+%{?with_rpm5:%patch -P 1 -p1}
+%patch -P 2 -p1
 
 %{__rm} po/stamp-po
 
